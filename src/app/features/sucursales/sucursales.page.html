@@ -1,0 +1,166 @@
+<ion-content class="bg-fondo">
+    <div class="page-container">
+        <app-header title="Sucursales" subtitle="Gestión de sedes físicas y delegaciones"></app-header>
+
+        <div class="toolbar-actions">
+            <div class="search-box">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" [(ngModel)]="searchTerm" (keyup)="applyFilters()"
+                    placeholder="Buscar por nombre o CP..." class="input-limpio">
+            </div>
+            <button class="btn-marca-desk desktop-only" (click)="nuevaSucursal()">
+                <ion-icon name="add-outline"></ion-icon>
+                <span>Nueva Sucursal</span>
+            </button>
+        </div>
+
+        <section class="content-section">
+            <div class="loading-state" *ngIf="isLoading">
+                <ion-spinner name="crescent"></ion-spinner>
+            </div>
+
+            <div class="sucursales-grid" *ngIf="!isLoading">
+                <div class="area-card" *ngFor="let suc of filteredSucursales" [class.is-inactive]="suc.estado_id !== 1">
+                    <div class="card-header">
+                        <div class="card-left">
+                            <div class="icon-box" [class.active]="suc.estado_id === 1">
+                                <ion-icon name="business-outline"></ion-icon>
+                            </div>
+                            <div class="text-box">
+                                <h3>{{ suc.nombre }}</h3>
+                                <code>{{ suc.codigo }}</code>
+                            </div>
+                        </div>
+                        <div class="card-right">
+                            <div class="status-dot" [class.active]="suc.estado_id === 1"></div>
+                            <div class="action-btns">
+                                <button class="btn-icon" (click)="editarSucursal(suc)"><ion-icon
+                                        name="create-outline"></ion-icon></button>
+                                <button class="btn-icon del" (click)="abrirEliminar(suc)"><ion-icon
+                                        name="trash-outline"></ion-icon></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-row"><ion-icon name="location-outline"></ion-icon> <span>{{ suc.direccion }},
+                                {{ suc.localidad }} (CP: {{ suc.codigo_postal }})</span></div>
+                        <div class="info-row"><ion-icon name="call-outline"></ion-icon> <span>{{ suc.telefono }}</span>
+                        </div>
+                        <div class="info-row"><ion-icon name="mail-outline"></ion-icon> <span>{{ suc.email }}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats-badge">
+                            <span class="count">{{ suc.usuarios_internos_count || 0 }}</span> <span
+                                class="label">Internos</span>
+                        </div>
+                        <div class="stats-badge">
+                            <span class="count">{{ suc.pas_count || 0 }}</span> <span class="label">PAS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="mobile-only">
+        <ion-fab-button (click)="nuevaSucursal()" class="fab-marca"><ion-icon name="add"></ion-icon></ion-fab-button>
+    </ion-fab>
+
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()" class="modal-seguro">
+        <ng-template>
+
+            <ion-header class="ion-no-border" style="background: #ffffff;">
+                <div class="m-header">
+                    <h2>{{ editingId ? 'Editar' : 'Nueva' }} Sucursal</h2>
+                    <button class="btn-close" (click)="cerrarModal()"><ion-icon
+                            name="close-outline"></ion-icon></button>
+                </div>
+            </ion-header>
+
+            <ion-content class="ion-padding" style="--background: #ffffff;">
+
+                <form [formGroup]="sucursalForm" id="formularioSucursal" class="m-form">
+
+                    <div class="form-row-custom">
+                        <div class="m-grupo flex-2">
+                            <label>NOMBRE DE LA SEDE</label>
+                            <input type="text" formControlName="nombre" placeholder="Ej. Sucursal Centro">
+                        </div>
+                        <div class="m-grupo flex-1">
+                            <label>CÓDIGO</label>
+                            <input type="text" formControlName="codigo" placeholder="SUC-001" class="monospace">
+                        </div>
+                    </div>
+
+                    <div class="m-grupo">
+                        <label>DIRECCIÓN PARTICULAR</label>
+                        <input type="text" formControlName="direccion" placeholder="Av. Siempre Viva 123">
+                    </div>
+
+                    <div class="form-row-custom">
+                        <div class="m-grupo flex-1">
+                            <label>LOCALIDAD</label>
+                            <input type="text" formControlName="localidad" placeholder="Ej. Concordia">
+                        </div>
+                        <div class="m-grupo flex-1">
+                            <label>PROVINCIA</label>
+                            <input type="text" formControlName="provincia" placeholder="Ej. Entre Ríos">
+                        </div>
+                    </div>
+
+                    <div class="form-row-custom">
+                        <div class="m-grupo flex-1">
+                            <label>CÓDIGO POSTAL</label>
+                            <input type="text" formControlName="codigo_postal" placeholder="7630" class="monospace">
+                        </div>
+                        <div class="m-grupo flex-1">
+                            <label>TELÉFONO</label>
+                            <input type="text" formControlName="telefono" placeholder="011 4444-5555">
+                        </div>
+                    </div>
+
+                    <div class="m-grupo">
+                        <label>CORREO ELECTRÓNICO</label>
+                        <input type="email" formControlName="email" placeholder="sede@broker.com">
+                    </div>
+
+                    <div class="m-grupo" style="margin-bottom: 0;">
+                        <label>ESTADO OPERATIVO</label>
+                        <div class="select-caja">
+                            <select formControlName="estado_id">
+                                <option [value]="1">Activa</option>
+                                <option [value]="0">Cerrada</option>
+                            </select>
+                            <ion-icon name="chevron-down-outline" class="flecha"></ion-icon>
+                        </div>
+                    </div>
+
+                </form>
+            </ion-content>
+
+            <ion-footer class="ion-no-border" style="background: #ffffff; padding: 16px 24px;">
+                <button class="btn-salvavidas-marca" type="submit" form="formularioSucursal" (click)="guardarSucursal()"
+                    [disabled]="sucursalForm.invalid">
+                    {{ editingId ? 'Guardar Cambios' : 'Confirmar Sucursal' }}
+                </button>
+                <button class="btn-salvavidas-gris" type="button" (click)="cerrarModal()">Cancelar</button>
+            </ion-footer>
+
+        </ng-template>
+    </ion-modal>
+
+    <ion-modal [isOpen]="isDeleteModalOpen" (didDismiss)="cerrarEliminar()" class="modal-eliminar">
+        <ng-template>
+            <div class="text-center" style="padding: 32px; background: white; height: 100%;">
+                <ion-icon name="warning-outline" class="icono-peligro"></ion-icon>
+                <h2 class="titulo-peligro">¿Cerrar Sucursal?</h2>
+                <p class="texto-peligro">Estás por borrar <strong>{{ sucursalToDelete?.nombre }}</strong>.</p>
+                <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+                    <button class="btn-salvavidas-rojo" (click)="confirmarEliminacion()">Sí, Eliminar</button>
+                    <button class="btn-salvavidas-gris" (click)="cerrarEliminar()">Cancelar</button>
+                </div>
+            </div>
+        </ng-template>
+    </ion-modal>
+</ion-content>

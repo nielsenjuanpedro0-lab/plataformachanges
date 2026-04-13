@@ -1,0 +1,130 @@
+ion-content {
+  --background: #F5F7FA;
+}
+
+.page-container {
+  padding: 48px 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.assignment-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+  transition: 0.2s;
+
+  &:hover {
+    transform: translateX(8px);
+    border-color: #2B67FF;
+  }
+}
+
+.card-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #CBD5E1;
+
+  &.active {
+    background: #10B981;
+  }
+}
+
+.assignment-main {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex: 1;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 250px;
+
+  .avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #061121;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #061121;
+    margin: 0;
+  }
+
+  .role-badge {
+    font-size: 0.75rem;
+    color: #2B67FF;
+    font-weight: 600;
+  }
+}
+
+.branch-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748B;
+  font-weight: 500;
+
+  ion-icon {
+    font-size: 1.2rem;
+    color: #94A3B8;
+  }
+}
+
+.btn-delete {
+  background: #F8FAFC;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: #94A3B8;
+  cursor: pointer;
+
+  &:hover {
+    color: #EF4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
+}
+
+/* Modales y Forms (Reutilizados para consistencia) */
+ion-modal.form-modal {
+  --width: 500px;
+  --height: auto;
+  align-items: center;
+}
+
+.custom-modal-content {
+  background: white;
+  padding: 32px;
+  border-radius: 28px;
+}
+
+.custom-select-simple {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  background: #F8FAFC;
+  margin-top: 8px;
+}

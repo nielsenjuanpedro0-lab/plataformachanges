@@ -1,0 +1,99 @@
+<ion-content>
+  <div class="page-container">
+    <header class="page-header">
+      <div class="title-group">
+        <h1 class="page-title">Ejecutivos por Sucursal</h1>
+        <p class="page-subtitle">Asignación de equipos operativos a sedes</p>
+      </div>
+      <button class="btn-primary" (click)="nuevaAsignacion()">
+        <ion-icon name="add-outline"></ion-icon>
+        Asignar Ejecutivo
+      </button>
+    </header>
+
+    <section class="content-section">
+      <div class="loading-state" *ngIf="isLoading">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+
+      <div class="list-container" *ngIf="!isLoading">
+        <div class="assignment-card" *ngFor="let asig of asignaciones">
+          <div class="card-indicator" [class.active]="asig.estado_id === 1"></div>
+
+          <div class="assignment-main">
+            <div class="user-info">
+              <div class="avatar-sm">{{ asig.ejecutivo.nombre[0] }}{{ asig.ejecutivo.apellido[0] }}</div>
+              <div>
+                <h3 class="name">{{ asig.ejecutivo.nombre }} {{ asig.ejecutivo.apellido }}</h3>
+                <span class="role-badge">{{ asig.tipo_ejecutivo.nombre }}</span>
+              </div>
+            </div>
+
+            <div class="branch-info">
+              <ion-icon name="business-outline"></ion-icon>
+              <span>{{ asig.sucursal.nombre }}</span>
+            </div>
+          </div>
+
+          <button class="btn-delete" (click)="abrirEliminar(asig)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()" class="centered-modal form-modal">
+    <ng-template>
+      <div class="custom-modal-content" (click)="isDropdownOpen = false">
+        <div class="modal-header">
+          <h2 class="modal-title">Nueva Asignación</h2>
+          <button class="btn-close-circle" (click)="cerrarModal()"><ion-icon name="close-outline"></ion-icon></button>
+        </div>
+
+        <form [formGroup]="asignacionForm" class="custom-form">
+          <div class="form-group">
+            <label class="input-label">Seleccionar Sucursal</label>
+            <select formControlName="sucursal_id" class="custom-select-simple">
+              <option *ngFor="let s of sucursales" [value]="s.id">{{ s.nombre }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label">Usuario Interno</label>
+            <select formControlName="user_id" class="custom-select-simple">
+              <option *ngFor="let u of usuariosInternos" [value]="u.id">{{ u.nombre }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label">Rol / Tipo de Ejecutivo</label>
+            <select formControlName="tipo_ejecutivo_id" class="custom-select-simple">
+              <option *ngFor="let t of tiposEjecutivo" [value]="t.id">{{ t.nombre }}</option>
+            </select>
+          </div>
+
+          <div class="form-group dropdown-group">
+            <label class="input-label">Estado de Asignación</label>
+            <div class="custom-dropdown-container">
+              <div class="custom-dropdown-trigger" [class.open]="isDropdownOpen" (click)="toggleDropdown($event)">
+                <span>{{ getEstadoLabel() }}</span>
+                <ion-icon name="chevron-down-outline" [class.rotate]="isDropdownOpen"></ion-icon>
+              </div>
+              <div class="custom-dropdown-menu" *ngIf="isDropdownOpen">
+                <div class="dropdown-item" (click)="selectEstado(1)">Activo</div>
+                <div class="dropdown-item" (click)="selectEstado(0)">Inactivo</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-actions-box">
+            <button type="button" class="btn-text" (click)="cerrarModal()">Cancelar</button>
+            <button type="submit" class="btn-primary-modal" [disabled]="asignacionForm.invalid">Confirmar
+              Asignación</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

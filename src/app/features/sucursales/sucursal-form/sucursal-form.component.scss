@@ -1,0 +1,223 @@
+/* VARIABLES ARGBROKER */
+:host {
+    display: block;
+    height: 100%;
+    background: #ffffff;
+    --primary: #2B67FF;
+    --dark: #061121;
+    --text-muted: #6B7280;
+    --bg-input: #F9FAFB;
+}
+
+/* ESTRUCTURA FLEXBOX BLINDADA */
+.modal-flex-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #ffffff;
+}
+
+.modal-header-custom {
+    flex-shrink: 0;
+    /* No se achica nunca */
+    padding: 24px 24px 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+        margin: 0;
+        font-weight: 800;
+        font-size: 1.6rem;
+        color: var(--dark) !important;
+        letter-spacing: -0.5px;
+    }
+
+    .btn-close-circle {
+        background: #F3F4F6;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s ease;
+
+        &:hover {
+            background: #E5E7EB;
+            color: var(--dark);
+        }
+    }
+}
+
+/* SCROLL ELEGANTE ESTILO MAC */
+.modal-body-scroll {
+    flex: 1;
+    /* Ocupa el espacio sobrante */
+    overflow-y: auto;
+    padding: 0 24px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    /* Súper finita */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #E2E8F0;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #CBD5E1;
+}
+
+/* FORMULARIO Y CAMPOS */
+.clean-apple-form {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.form-row-custom {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.m-grupo {
+    margin-bottom: 24px;
+    width: 100%;
+
+    label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted) !important;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 16px;
+        border-radius: 14px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: var(--bg-input) !important;
+        color: #061121 !important;
+        font-size: 1.05rem;
+        font-weight: 500;
+        outline: none;
+        transition: all 0.2s ease;
+
+        &::placeholder {
+            color: #D1D5DB;
+            font-weight: 400;
+        }
+
+        &:focus {
+            border-color: var(--primary);
+            background: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(43, 103, 255, 0.1);
+        }
+    }
+
+    .monospace {
+        font-family: monospace;
+        letter-spacing: 0.5px;
+    }
+}
+
+.select-caja {
+    position: relative;
+
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+    }
+
+    .flecha {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        pointer-events: none;
+    }
+}
+
+/* FOOTER Y BOTONES FIJOS */
+.modal-footer-custom {
+    flex-shrink: 0;
+    /* No se achica nunca */
+    padding: 16px 24px;
+    background: #ffffff;
+    border-top: 1px solid #F1F5F9;
+}
+
+.btn-salvavidas-marca {
+    display: block !important;
+    width: 100%;
+    background: var(--dark) !important;
+    color: #ffffff !important;
+    padding: 18px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover:not(:disabled) {
+        background: var(--primary) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(43, 103, 255, 0.2);
+    }
+
+    &:disabled {
+        opacity: 0.4 !important;
+        cursor: not-allowed;
+    }
+}
+
+.btn-salvavidas-gris {
+    display: block !important;
+    width: 100%;
+    background: transparent !important;
+    color: var(--text-muted) !important;
+    padding: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+        color: var(--dark) !important;
+    }
+}
+
+/* RESPONSIVO MOBILE */
+@media (max-width: 768px) {
+    .form-row-custom {
+        flex-direction: column;
+        gap: 0;
+    }
+}

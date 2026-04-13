@@ -1,0 +1,26 @@
+<ion-split-pane contentId="pas-content" when="lg">
+
+    <ion-menu contentId="pas-content">
+        <div class="sidebar-wrapper pas-theme">
+            <header class="sidebar-header">
+                <div class="brand-logo pas-accent">AR</div>
+                <div class="brand-info">
+                    <h2>ARGbroker</h2>
+                    <p>Panel Productor</p>
+                </div>
+            </header>
+
+            <nav class="nav-group">
+                <a routerLink="/pas/inicio" routerLinkActive="is-active" class="nav-link">
+                    <ion-icon name="home-outline"></ion-icon>
+                    <span>Mi Inicio</span>
+                </a>
+                <a routerLink="/pas/mis-tickets" routerLinkActive="is-active" class="nav-link">
+                    <ion-icon name="chatbubbles-outline"></ion-icon>
+                    <span>Mis Consultas</span>
+                </a>
+            </nav>
+        </div>
+    </ion-menu>
+    <ion-router-outlet id="pas-content"></ion-router-outlet>
+</ion-split-pane>

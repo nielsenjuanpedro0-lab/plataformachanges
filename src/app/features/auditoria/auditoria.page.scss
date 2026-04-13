@@ -1,0 +1,215 @@
+ion-content {
+    --background: #F5F7FA;
+}
+
+.page-container {
+    padding: 48px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.audit-timeline {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 102px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #E2E8F0;
+    }
+}
+
+.audit-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.time-column {
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+
+    .date {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #061121;
+        text-transform: uppercase;
+    }
+
+    .hour {
+        font-size: 0.85rem;
+        color: #94A3B8;
+        font-weight: 500;
+    }
+}
+
+.activity-marker {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #CBD5E1;
+    border: 3px solid #F5F7FA;
+    z-index: 2;
+    margin-top: 6px;
+
+    &[data-accion="crear"] {
+        background: #10B981;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    }
+
+    &[data-accion="editar"] {
+        background: #2B67FF;
+        box-shadow: 0 0 0 4px rgba(43, 103, 255, 0.1);
+    }
+
+    &[data-accion="eliminar"] {
+        background: #EF4444;
+        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    }
+}
+
+.activity-card {
+    flex: 1;
+    background: white;
+    border-radius: 20px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+
+    .avatar-init {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #061121;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .user-name {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #061121;
+    }
+}
+
+.action-tag {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    background: #F1F5F9;
+    color: #64748B;
+
+    &[data-accion="crear"] {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10B981;
+    }
+
+    &[data-accion="editar"] {
+        background: rgba(43, 103, 255, 0.1);
+        color: #2B67FF;
+    }
+
+    &[data-accion="eliminar"] {
+        background: rgba(239, 68, 68, 0.1);
+        color: #EF4444;
+    }
+}
+
+.event-desc p {
+    font-size: 0.95rem;
+    color: #475569;
+    margin: 0;
+    font-weight: 500;
+}
+
+.module-path {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    font-family: monospace;
+}
+
+.btn-detail {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+        background: #061121;
+        color: white;
+        border-color: #061121;
+    }
+}
+
+/* Modal JSON */
+ion-modal.json-modal {
+    --width: 700px;
+    --height: auto;
+    align-items: center;
+}
+
+.json-viewer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 10px;
+}
+
+.json-section {
+    label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #94A3B8;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    pre {
+        background: #1E293B;
+        color: #94A3B8;
+        padding: 16px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        margin: 0;
+
+        &.new {
+            border-left: 4px solid #10B981;
+            color: #F1F5F9;
+        }
+    }
+}

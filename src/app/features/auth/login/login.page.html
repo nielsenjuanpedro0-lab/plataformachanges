@@ -1,0 +1,52 @@
+<ion-content class="login-content" [fullscreen]="true">
+  <div class="login-container">
+
+    <div class="brand-section">
+      <img src="assets/Logo.png" class="logo-arg" alt="Logo ARGbroker">
+      <p class="subtitle">Plataforma de Gestión</p>
+    </div>
+
+    <div class="form-card">
+      <div class="form-header">
+        <h3>Bienvenido de nuevo</h3>
+        <p>Ingresa tus credenciales para continuar</p>
+      </div>
+
+      <div class="error-banner" *ngIf="errorMessage()">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>{{ errorMessage() }}</span>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <ion-input formControlName="identifier" label="Usuario o Email" labelPlacement="floating" fill="outline"
+          shape="round" mode="md" class="custom-input"
+          [color]="identifierControl.invalid && identifierControl.touched ? 'danger' : 'primary'">
+          <ion-icon slot="start" name="person-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div class="validation-error" *ngIf="identifierControl.invalid && identifierControl.touched">
+          El usuario es requerido.
+        </div>
+
+        <ion-input formControlName="password" type="password" label="Contraseña" labelPlacement="floating"
+          fill="outline" shape="round" mode="md" class="custom-input custom-input-margin"
+          [color]="passwordControl.invalid && passwordControl.touched ? 'danger' : 'primary'">
+          <ion-icon slot="start" name="lock-closed-outline" class="input-icon"></ion-icon>
+        </ion-input>
+        <div class="validation-error" *ngIf="passwordControl.invalid && passwordControl.touched">
+          La contraseña es requerida.
+        </div>
+
+        <div class="forgot-password">
+          <a>¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <ion-button type="submit" expand="block" shape="round" class="submit-btn" [disabled]="isLoading()">
+          <span *ngIf="!isLoading()">Iniciar Sesión</span>
+          <ion-spinner name="crescent" *ngIf="isLoading()"></ion-spinner>
+        </ion-button>
+
+      </form>
+    </div>
+  </div>
+</ion-content>

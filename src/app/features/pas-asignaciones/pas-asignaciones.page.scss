@@ -1,0 +1,370 @@
+/* COLORES BASE ARGBROKER */
+.bg-fondo {
+    --background: #F8FAFC !important;
+}
+
+.page-container {
+    padding: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    background: #ffffff !important;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+
+    ion-icon {
+        color: #94A3B8;
+        margin-right: 12px;
+        font-size: 1.2rem;
+    }
+
+    .input-limpio {
+        border: none !important;
+        outline: none !important;
+        background: transparent !important;
+        width: 100%;
+        color: #061121 !important;
+        font-size: 1rem;
+
+        &::placeholder {
+            color: #94A3B8;
+        }
+    }
+}
+
+.btn-marca-desk {
+    background: #061121 !important;
+    color: #ffffff !important;
+    border-radius: 12px;
+    padding: 0 24px;
+    height: 50px;
+    border: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+        background: #2B67FF !important;
+        transform: translateY(-2px);
+    }
+}
+
+/* CARDS APPLE STYLE */
+.asignaciones-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.area-card {
+    background: #ffffff !important;
+    padding: 20px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid #E2E8F0;
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h3 {
+        margin: 0 0 6px 0;
+        font-weight: 800;
+        color: #061121 !important;
+        font-size: 1.2rem;
+    }
+
+    .sucursal-badge {
+        background: #F1F5F9;
+        color: #475569;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-family: inherit;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        ion-icon {
+            font-size: 0.9rem;
+        }
+    }
+
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        background: #F1F5F9;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748B;
+
+        &.active {
+            background: rgba(43, 103, 255, 0.1);
+            color: #2B67FF;
+        }
+    }
+}
+
+.card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #CBD5E1;
+
+        &.active {
+            background: #10B981;
+        }
+    }
+
+    .action-btns .btn-icon {
+        background: transparent;
+        border: none;
+        font-size: 1.3rem;
+        color: #94A3B8;
+        cursor: pointer;
+
+        &:hover {
+            color: #061121
+        }
+
+        &.del:hover {
+            color: #EF4444;
+        }
+    }
+}
+
+/* =========================================================
+   MODAL IONIC BLINDADO
+   ========================================================= */
+ion-modal.modal-seguro {
+    --width: 480px;
+    --height: 520px;
+    --border-radius: 24px;
+    --background: #ffffff !important;
+}
+
+ion-modal.modal-eliminar {
+    --width: 400px;
+    --height: auto;
+    --border-radius: 24px;
+    --background: #ffffff !important;
+}
+
+.m-header {
+    padding: 24px 32px 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #F1F5F9;
+
+    h2 {
+        margin: 0;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #061121 !important;
+        letter-spacing: -0.5px;
+    }
+
+    .btn-close {
+        background: #F1F5F9;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        color: #64748B;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s ease;
+
+        &:hover {
+            background: #E2E8F0;
+            color: #061121;
+        }
+    }
+}
+
+.m-form {
+    padding-top: 8px;
+}
+
+.m-grupo {
+    margin-bottom: 24px;
+    width: 100%;
+
+    label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #64748B !important;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    select {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid #E2E8F0;
+        background: #F8FAFC !important;
+        color: #000000 !important;
+        font-size: 1rem;
+        outline: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &:focus {
+            border-color: #2B67FF;
+            background: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(43, 103, 255, 0.1);
+        }
+    }
+}
+
+.select-caja {
+    position: relative;
+
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+    }
+
+    .flecha {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748B;
+        pointer-events: none;
+    }
+}
+
+.btn-salvavidas-marca {
+    display: block !important;
+    width: 100%;
+    background: #061121 !important;
+    color: #ffffff !important;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-bottom: 8px;
+
+    &:hover:not(:disabled) {
+        background: #2B67FF !important;
+    }
+
+    &:disabled {
+        opacity: 0.4 !important;
+        cursor: not-allowed;
+    }
+}
+
+.btn-salvavidas-gris {
+    display: block !important;
+    width: 100%;
+    background: transparent !important;
+    color: #64748B !important;
+    padding: 12px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+        color: #061121 !important;
+    }
+}
+
+.btn-salvavidas-rojo {
+    display: block !important;
+    width: 100%;
+    background: #EF4444 !important;
+    color: #ffffff !important;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.icono-peligro {
+    font-size: 4rem;
+    color: #EF4444;
+    margin-bottom: 16px;
+}
+
+.titulo-peligro {
+    margin: 0 0 8px 0;
+    font-weight: 800;
+    color: #061121 !important;
+}
+
+.texto-peligro {
+    color: #64748B !important;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.fab-marca {
+    --background: #2B67FF;
+    --background-hover: #061121;
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 20px 16px 100px 16px;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+
+    ion-modal.modal-seguro {
+        --width: 100%;
+        --height: 100% !important;
+        --border-radius: 0;
+    }
+}

@@ -1,0 +1,93 @@
+<ion-content>
+  <div class="dashboard-container">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">Panel de Gestión</h1>
+        <p class="page-subtitle">Bienvenido, Pedro N.</p>
+      </div>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Sistemas Online
+      </div>
+    </header>
+
+    <section class="metrics-grid">
+      <article class="metric-card">
+        <div class="metric-icon-box bg-blue">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <div class="metric-info">
+          <span class="metric-value">14</span>
+          <span class="metric-label">Pendientes Emisión</span>
+        </div>
+        <span class="metric-trend positive">+2</span>
+      </article>
+
+      <article class="metric-card">
+        <div class="metric-icon-box bg-red">
+          <ion-icon name="warning-outline"></ion-icon>
+        </div>
+        <div class="metric-info">
+          <span class="metric-value">3</span>
+          <span class="metric-label">Siniestros Críticos</span>
+        </div>
+        <span class="metric-trend negative">-1</span>
+      </article>
+
+      <article class="metric-card">
+        <div class="metric-icon-box bg-purple">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+        </div>
+        <div class="metric-info">
+          <span class="metric-value">28</span>
+          <span class="metric-label">Tickets Abiertos</span>
+        </div>
+        <span class="metric-trend positive">+5</span>
+      </article>
+
+      <article class="metric-card">
+        <div class="metric-icon-box bg-orange">
+          <ion-icon name="stats-chart-outline"></ion-icon>
+        </div>
+        <div class="metric-info">
+          <span class="metric-value">2</span>
+          <span class="metric-label">Productores Offline</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="actions-scroll">
+      <button class="action-pill">
+        <ion-icon name="person-add"></ion-icon>
+        Nuevo Usuario
+      </button>
+      <button class="action-pill">
+        <ion-icon name="business"></ion-icon>
+        Nueva Sucursal
+      </button>
+      <button class="action-pill">
+        <ion-icon name="shield-checkmark"></ion-icon>
+        Auditoría PAS
+      </button>
+    </section>
+
+    <section class="priority-section">
+      <div class="section-heading">
+        <h2 class="section-title">Prioridades de Gestión</h2>
+        <span class="badge-count">3</span>
+      </div>
+
+      <div class="priority-cards">
+        <div class="priority-card">
+          <div class="priority-indicator bg-red"></div>
+          <div class="priority-content">
+            <span class="priority-tag text-red bg-red-light">Alta</span>
+            <h3 class="priority-title">Error liquidación Sucursal Necochea</h3>
+            <p class="priority-meta">Administración • Espera: 2hs</p>
+          </div>
+          <button class="btn-primary">Atender</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</ion-content>

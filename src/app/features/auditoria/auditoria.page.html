@@ -1,0 +1,84 @@
+<ion-content>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="title-group">
+                <h1 class="page-title">Auditoría de Sistema</h1>
+                <p class="page-subtitle">Trazabilidad histórica de operaciones y cambios</p>
+            </div>
+            <div class="header-filters">
+                <div class="search-box">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Filtrar por usuario o módulo...">
+                </div>
+            </div>
+        </header>
+
+        <div class="loading-state" *ngIf="isLoading">
+            <ion-spinner name="crescent"></ion-spinner>
+        </div>
+
+        <section class="audit-timeline" *ngIf="!isLoading">
+            <div class="audit-row" *ngFor="let ev of eventos">
+                <div class="time-column">
+                    <span class="date">{{ ev.created_at | date:'dd MMM' }}</span>
+                    <span class="hour">{{ ev.created_at | date:'HH:mm' }}</span>
+                </div>
+
+                <div class="activity-marker" [attr.data-accion]="ev.accion"></div>
+
+                <div class="activity-card">
+                    <div class="card-main">
+                        <div class="user-info">
+                            <div class="avatar-init">{{ ev.usuario_nombre[0] }}</div>
+                            <div class="text">
+                                <span class="user-name">{{ ev.usuario_nombre }}</span>
+                                <span class="action-tag" [attr.data-accion]="ev.accion">{{ ev.accion | uppercase
+                                    }}</span>
+                            </div>
+                        </div>
+
+                        <div class="event-desc">
+                            <p>{{ ev.descripcion }}</p>
+                            <span class="module-path">{{ ev.modulo }} / id: {{ ev.id }}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-meta desktop-only">
+                        <div class="meta-item"><ion-icon name="earth-outline"></ion-icon> {{ ev.ip_address }}</div>
+                        <button class="btn-detail" (click)="verDetalle(ev)">
+                            <ion-icon name="eye-outline"></ion-icon>
+                            Ver JSON
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()" class="centered-modal json-modal">
+        <ng-template>
+            <div class="custom-modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Detalle Técnico del Evento</h2>
+                    <button class="btn-close-circle" (click)="cerrarModal()"><ion-icon
+                            name="close-outline"></ion-icon></button>
+                </div>
+
+                <div class="json-viewer-container">
+                    <div class="json-section" *ngIf="selectedEvento?.payload_before">
+                        <label>VALOR ANTERIOR</label>
+                        <pre>{{ selectedEvento.payload_before | json }}</pre>
+                    </div>
+                    <div class="json-section" *ngIf="selectedEvento?.payload_after">
+                        <label>VALOR NUEVO</label>
+                        <pre class="new">{{ selectedEvento.payload_after | json }}</pre>
+                    </div>
+                    <div class="empty-payload" *ngIf="!selectedEvento?.payload_after">
+                        <ion-icon name="code-slash-outline"></ion-icon>
+                        <p>Este evento no generó cambios en la base de datos.</p>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ion-modal>
+</ion-content>

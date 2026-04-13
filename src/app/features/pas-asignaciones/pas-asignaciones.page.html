@@ -1,0 +1,134 @@
+<ion-content class="bg-fondo">
+    <div class="page-container">
+        <app-header title="Asignaciones" subtitle="Vinculación de PAS con Sucursales"></app-header>
+
+        <div class="toolbar-actions">
+            <div class="search-box">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" [(ngModel)]="searchTerm" (keyup)="applyFilters()"
+                    placeholder="Buscar por PAS o Sucursal..." class="input-limpio">
+            </div>
+            <button class="btn-marca-desk desktop-only" (click)="nuevaAsignacion()">
+                <ion-icon name="add-outline"></ion-icon>
+                <span>Vincular PAS</span>
+            </button>
+        </div>
+
+        <section class="content-section">
+            <div class="loading-state" *ngIf="isLoading">
+                <ion-spinner name="crescent"></ion-spinner>
+            </div>
+
+            <div class="asignaciones-grid" *ngIf="!isLoading">
+                <div class="area-card" *ngFor="let asig of filteredAsignaciones"
+                    [class.is-inactive]="asig.estado_id !== 1">
+                    <div class="card-header">
+                        <div class="card-left">
+                            <div class="icon-box" [class.active]="asig.estado_id === 1">
+                                <ion-icon name="link-outline"></ion-icon>
+                            </div>
+                            <div class="text-box">
+                                <h3>{{ asig.pas_nombre }}</h3>
+                                <code class="sucursal-badge">
+                  <ion-icon name="business-outline"></ion-icon> {{ asig.sucursal_nombre }}
+                </code>
+                            </div>
+                        </div>
+                        <div class="card-right">
+                            <div class="status-dot" [class.active]="asig.estado_id === 1"></div>
+                            <div class="action-btns">
+                                <button class="btn-icon" (click)="editarAsignacion(asig)"><ion-icon
+                                        name="create-outline"></ion-icon></button>
+                                <button class="btn-icon del" (click)="abrirEliminar(asig)"><ion-icon
+                                        name="trash-outline"></ion-icon></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="mobile-only">
+        <ion-fab-button (click)="nuevaAsignacion()" class="fab-marca"><ion-icon name="add"></ion-icon></ion-fab-button>
+    </ion-fab>
+
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()" class="modal-seguro">
+        <ng-template>
+            <ion-header class="ion-no-border" style="background: #ffffff;">
+                <div class="m-header">
+                    <h2>{{ editingId ? 'Editar' : 'Nueva' }} Vinculación</h2>
+                    <button class="btn-close" (click)="cerrarModal()"><ion-icon
+                            name="close-outline"></ion-icon></button>
+                </div>
+            </ion-header>
+
+            <ion-content class="ion-padding" style="--background: #ffffff;">
+                <form [formGroup]="asignacionForm" id="formularioAsignacion" class="m-form">
+
+                    <div class="m-grupo">
+                        <label>PRODUCTOR (PAS)</label>
+                        <div class="select-caja">
+                            <select formControlName="pas_id">
+                                <option value="" disabled selected>Seleccione un productor</option>
+                                <option *ngFor="let pas of productoresDisponibles" [value]="pas.id">
+                                    {{ pas.nombre }} ({{ pas.matricula }})
+                                </option>
+                            </select>
+                            <ion-icon name="chevron-down-outline" class="flecha"></ion-icon>
+                        </div>
+                    </div>
+
+                    <div class="m-grupo">
+                        <label>ASIGNAR A SUCURSAL</label>
+                        <div class="select-caja">
+                            <select formControlName="sucursal_id">
+                                <option value="" disabled selected>Seleccione una sucursal</option>
+                                <option *ngFor="let suc of sucursalesDisponibles" [value]="suc.id">
+                                    {{ suc.nombre }}
+                                </option>
+                            </select>
+                            <ion-icon name="chevron-down-outline" class="flecha"></ion-icon>
+                        </div>
+                    </div>
+
+                    <div class="m-grupo" style="margin-bottom: 0;">
+                        <label>ESTADO DE LA VINCULACIÓN</label>
+                        <div class="select-caja">
+                            <select formControlName="estado_id">
+                                <option [value]="1">Activa</option>
+                                <option [value]="0">Inactiva / Suspendida</option>
+                            </select>
+                            <ion-icon name="chevron-down-outline" class="flecha"></ion-icon>
+                        </div>
+                    </div>
+
+                </form>
+            </ion-content>
+
+            <ion-footer class="ion-no-border" style="background: #ffffff; padding: 16px 24px;">
+                <button class="btn-salvavidas-marca" type="submit" form="formularioAsignacion"
+                    (click)="guardarAsignacion()" [disabled]="asignacionForm.invalid">
+                    {{ editingId ? 'Guardar Cambios' : 'Confirmar Vinculación' }}
+                </button>
+                <button class="btn-salvavidas-gris" type="button" (click)="cerrarModal()">Cancelar</button>
+            </ion-footer>
+
+        </ng-template>
+    </ion-modal>
+
+    <ion-modal [isOpen]="isDeleteModalOpen" (didDismiss)="cerrarEliminar()" class="modal-eliminar">
+        <ng-template>
+            <div class="text-center" style="padding: 32px; background: white; height: 100%;">
+                <ion-icon name="warning-outline" class="icono-peligro"></ion-icon>
+                <h2 class="titulo-peligro">¿Desvincular PAS?</h2>
+                <p class="texto-peligro">Estás por remover la asignación de <strong>{{ asignacionToDelete?.pas_nombre
+                        }}</strong> de la <strong>{{ asignacionToDelete?.sucursal_nombre }}</strong>.</p>
+                <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+                    <button class="btn-salvavidas-rojo" (click)="confirmarEliminacion()">Sí, Desvincular</button>
+                    <button class="btn-salvavidas-gris" (click)="cerrarEliminar()">Cancelar</button>
+                </div>
+            </div>
+        </ng-template>
+    </ion-modal>
+</ion-content>

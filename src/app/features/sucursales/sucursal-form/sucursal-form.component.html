@@ -1,0 +1,77 @@
+<form [formGroup]="sucursalForm" (ngSubmit)="onSubmit()" class="modal-flex-container">
+
+    <div class="modal-header-custom">
+        <h2>{{ sucursalId ? 'Editar' : 'Nueva' }} Sucursal</h2>
+        <button class="btn-close-circle" (click)="close()" type="button">
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="modal-body-scroll custom-scrollbar">
+        <div class="clean-apple-form">
+
+            <div class="form-row-custom">
+                <div class="m-grupo flex-2">
+                    <label>NOMBRE DE LA SEDE</label>
+                    <input type="text" formControlName="nombre" placeholder="Ej. Sucursal Centro">
+                </div>
+                <div class="m-grupo flex-1">
+                    <label>CÓDIGO</label>
+                    <input type="text" formControlName="codigo" placeholder="SUC-001" class="monospace">
+                </div>
+            </div>
+
+            <div class="m-grupo">
+                <label>DIRECCIÓN PARTICULAR</label>
+                <input type="text" formControlName="direccion" placeholder="Av. Siempre Viva 123">
+            </div>
+
+            <div class="form-row-custom">
+                <div class="m-grupo flex-1">
+                    <label>LOCALIDAD</label>
+                    <input type="text" formControlName="localidad" placeholder="Ej. Concordia">
+                </div>
+                <div class="m-grupo flex-1">
+                    <label>PROVINCIA</label>
+                    <input type="text" formControlName="provincia" placeholder="Ej. Entre Ríos">
+                </div>
+            </div>
+
+            <div class="form-row-custom">
+                <div class="m-grupo flex-1">
+                    <label>CÓDIGO POSTAL</label>
+                    <input type="text" formControlName="codigo_postal" placeholder="7630" class="monospace">
+                </div>
+                <div class="m-grupo flex-1">
+                    <label>TELÉFONO</label>
+                    <input type="text" formControlName="telefono" placeholder="011 4444-5555">
+                </div>
+            </div>
+
+            <div class="m-grupo">
+                <label>CORREO ELECTRÓNICO</label>
+                <input type="email" formControlName="email" placeholder="sede@broker.com">
+            </div>
+
+            <div class="m-grupo">
+                <label>ESTADO OPERATIVO</label>
+                <div class="select-caja">
+                    <select formControlName="estado_id">
+                        <option [value]="1">Activa</option>
+                        <option [value]="0">Cerrada</option>
+                    </select>
+                    <ion-icon name="chevron-down-outline" class="flecha"></ion-icon>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer-custom">
+        <button class="btn-salvavidas-marca" type="submit" [disabled]="sucursalForm.invalid">
+            {{ sucursalId ? 'Actualizar' : 'Confirmar Sucursal' }}
+        </button>
+        <button class="btn-salvavidas-gris" type="button" (click)="close()">Cancelar</button>
+    </div>
+
+</form>

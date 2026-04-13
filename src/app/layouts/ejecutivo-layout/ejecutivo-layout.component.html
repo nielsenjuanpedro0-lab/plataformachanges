@@ -1,0 +1,78 @@
+<ion-split-pane contentId="main-content" when="lg">
+    <ion-menu contentId="main-content">
+        <div class="sidebar-wrapper">
+
+            <header class="sidebar-header">
+                <div class="brand-logo">AR</div>
+                <div class="brand-info">
+                    <h2>ARGbroker</h2>
+                    <p>Panel Ejecutivo</p>
+                </div>
+            </header>
+
+            <nav class="nav-group">
+                <span class="nav-label">GESTIÓN</span>
+                <a routerLink="/home/dashboard" routerLinkActive="is-active" class="nav-link">
+                    <ion-icon name="grid-outline"></ion-icon>
+                    <span>Inicio</span>
+                </a>
+
+                <ion-accordion-group class="nav-accordion">
+                    <ion-accordion value="estructura">
+                        <ion-item slot="header" lines="none">
+                            <ion-icon name="business-outline" slot="start"></ion-icon>
+                            <ion-label>Estructura</ion-label>
+                        </ion-item>
+                        <div slot="content" class="nav-submenu">
+                            <a routerLink="/home/areas" routerLinkActive="sub-active">Áreas</a>
+                            <a routerLink="/home/sucursales" routerLinkActive="sub-active">Sucursales</a>
+                        </div>
+                    </ion-accordion>
+
+                    <ion-accordion value="personas">
+                        <ion-item slot="header" lines="none">
+                            <ion-icon name="people-outline" slot="start"></ion-icon>
+                            <ion-label>Personas</ion-label>
+                        </ion-item>
+                        <div slot="content" class="nav-submenu">
+                            <a routerLink="/home/pas" routerLinkActive="sub-active">Productores (PAS)</a>
+                            <a routerLink="/home/pas-asignaciones" routerLinkActive="sub-active">Asignaciones</a>
+                            <a routerLink="/home/usuarios" routerLinkActive="sub-active">Usuarios Internos</a>
+                        </div>
+                    </ion-accordion>
+                </ion-accordion-group>
+            </nav>
+
+            <footer class="sidebar-footer">
+                <button class="logout-btn">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                    <span>Cerrar Sesión</span>
+                </button>
+
+                <div class="dev-tools-container"
+                    style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                    <span
+                        style="color: #2B67FF; font-size: 0.7rem; font-weight: 800; display: block; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+                        Vistas de Testeo
+                    </span>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <button routerLink="/pas/inicio"
+                            style="background: rgba(255,255,255,0.05); border: none; width: 100%; text-align: left; padding: 10px; border-radius: 8px; color: #94A3B8; cursor: pointer; display: flex; align-items: center;">
+                            <ion-icon name="person-outline" style="margin-right: 8px; font-size: 1.1rem;"></ion-icon>
+                            <span style="font-size: 0.85rem; font-weight: 600;">Ver como PAS</span>
+                        </button>
+
+                        <button routerLink="/organizador/dashboard"
+                            style="background: rgba(255,255,255,0.05); border: none; width: 100%; text-align: left; padding: 10px; border-radius: 8px; color: #94A3B8; cursor: pointer; display: flex; align-items: center;">
+                            <ion-icon name="people-outline" style="margin-right: 8px; font-size: 1.1rem;"></ion-icon>
+                            <span style="font-size: 0.85rem; font-weight: 600;">Ver como Organizador</span>
+                        </button>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-split-pane>

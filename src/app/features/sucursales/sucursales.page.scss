@@ -1,0 +1,450 @@
+/* COLORES BASE FORZADOS */
+.bg-fondo {
+    --background: #F8FAFC !important;
+}
+
+.page-container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* BUSCADOR Y TOOLBAR */
+.toolbar-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    background: #ffffff !important;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+
+    ion-icon {
+        color: #94A3B8;
+        margin-right: 12px;
+        font-size: 1.2rem;
+    }
+
+    .input-limpio {
+        border: none !important;
+        outline: none !important;
+        background: transparent !important;
+        width: 100%;
+        color: #061121 !important;
+        font-size: 1rem;
+
+        &::placeholder {
+            color: #94A3B8;
+        }
+    }
+}
+
+.btn-marca-desk {
+    background: #061121 !important;
+    color: #ffffff !important;
+    border-radius: 12px;
+    padding: 0 24px;
+    height: 50px;
+    border: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+        background: #2B67FF !important;
+        transform: translateY(-2px);
+    }
+}
+
+/* CARJETAS DE SUCURSALES */
+.sucursales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+}
+
+.area-card {
+    background: #ffffff !important;
+    padding: 20px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid #E2E8F0;
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h3 {
+        margin: 0;
+        font-weight: 800;
+        color: #061121 !important;
+        font-size: 1.2rem;
+    }
+
+    code {
+        color: #64748B !important;
+        font-size: 0.85rem;
+        font-family: monospace;
+        display: block;
+        margin-top: 4px;
+    }
+
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        background: #F1F5F9;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748B;
+
+        &.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+        }
+    }
+}
+
+.card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #CBD5E1;
+
+        &.active {
+            background: #10B981;
+        }
+    }
+
+    .action-btns .btn-icon {
+        background: transparent;
+        border: none;
+        font-size: 1.3rem;
+        color: #94A3B8;
+        cursor: pointer;
+
+        &:hover {
+            color: #061121
+        }
+
+        &.del:hover {
+            color: #EF4444;
+        }
+    }
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid #F1F5F9;
+
+    .info-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #475569;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    ion-icon {
+        color: #94A3B8;
+        font-size: 1.1rem;
+    }
+}
+
+.card-footer {
+    display: flex;
+    gap: 12px;
+
+    .stats-badge {
+        background: #F8FAFC;
+        padding: 8px 16px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .count {
+            font-weight: 800;
+            color: #061121;
+        }
+
+        .label {
+            font-size: 0.75rem;
+            color: #64748B;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    }
+}
+
+/* =========================================================
+   MODAL IONIC (LA SOLUCIÓN DEFINITIVA)
+   ========================================================= */
+ion-modal.modal-seguro {
+    --width: 600px;
+    --height: 90vh;
+    /* Alto casi completo pero respetando el diseño */
+    --border-radius: 24px;
+    --background: #ffffff !important;
+}
+
+ion-modal.modal-eliminar {
+    --width: 400px;
+    --height: auto;
+    --border-radius: 24px;
+    --background: #ffffff !important;
+}
+
+/* HEADER MODAL */
+.m-header {
+    padding: 24px 32px 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #F1F5F9;
+
+    h2 {
+        margin: 0;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #061121 !important;
+        letter-spacing: -0.5px;
+    }
+
+    .btn-close {
+        background: #F1F5F9;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        color: #64748B;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s ease;
+
+        &:hover {
+            background: #E2E8F0;
+            color: #061121;
+        }
+    }
+}
+
+/* FORMULARIO Y CAMPOS (COLORES FUERTES Y VISIBLES) */
+.m-form {
+    padding-top: 8px;
+}
+
+.form-row-custom {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.m-grupo {
+    margin-bottom: 20px;
+    width: 100%;
+
+    /* ESTO ARREGLA LOS TÍTULOS INVISIBLES */
+    label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #64748B !important;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* ESTO ARREGLA LOS TEXTOS INVISIBLES */
+    input,
+    select {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid #E2E8F0;
+        background: #F8FAFC !important;
+        color: #000000 !important;
+        font-size: 1rem;
+        outline: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &::placeholder {
+            color: #94A3B8;
+        }
+
+        &:focus {
+            border-color: #2B67FF;
+            background: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(43, 103, 255, 0.1);
+        }
+    }
+
+    .monospace {
+        font-family: monospace;
+        letter-spacing: 0.5px;
+    }
+}
+
+.select-caja {
+    position: relative;
+
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+    }
+
+    .flecha {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748B;
+        pointer-events: none;
+    }
+}
+
+/* BOTONES FIJOS EN EL FOOTER */
+.btn-salvavidas-marca {
+    display: block !important;
+    width: 100%;
+    background: #061121 !important;
+    color: #ffffff !important;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-bottom: 8px;
+
+    &:hover:not(:disabled) {
+        background: #2B67FF !important;
+    }
+
+    &:disabled {
+        opacity: 0.4 !important;
+        cursor: not-allowed;
+    }
+}
+
+.btn-salvavidas-gris {
+    display: block !important;
+    width: 100%;
+    background: transparent !important;
+    color: #64748B !important;
+    padding: 12px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+        color: #061121 !important;
+    }
+}
+
+.btn-salvavidas-rojo {
+    display: block !important;
+    width: 100%;
+    background: #EF4444 !important;
+    color: #ffffff !important;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* MODAL ELIMINAR */
+.icono-peligro {
+    font-size: 4rem;
+    color: #EF4444;
+    margin-bottom: 16px;
+}
+
+.titulo-peligro {
+    margin: 0 0 8px 0;
+    font-weight: 800;
+    color: #061121 !important;
+}
+
+.texto-peligro {
+    color: #64748B !important;
+    margin-bottom: 0;
+}
+
+/* MOBILE */
+.fab-marca {
+    --background: #2B67FF;
+    --background-hover: #061121;
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 20px 16px 100px 16px;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+
+    .form-row-custom {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .sucursales-grid {
+        grid-template-columns: 1fr;
+    }
+
+    ion-modal.modal-seguro {
+        --width: 100%;
+        --height: 100% !important;
+        --border-radius: 0;
+    }
+}

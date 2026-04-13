@@ -1,0 +1,63 @@
+<ion-content>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="title-group">
+                <h1 class="page-title">Seguridad y Permisos</h1>
+                <p class="page-subtitle">Configuración de niveles de acceso y grupos de usuarios</p>
+            </div>
+        </header>
+
+        <div class="loading-state" *ngIf="isLoading">
+            <ion-spinner name="crescent"></ion-spinner>
+        </div>
+
+        <div class="security-layout" *ngIf="!isLoading">
+            <aside class="groups-sidebar">
+                <div class="sidebar-header">
+                    <ion-icon name="people-outline"></ion-icon>
+                    <span>GRUPOS DEL SISTEMA</span>
+                </div>
+                <div class="group-list">
+                    <div class="group-card" *ngFor="let g of grupos" [class.active]="selectedGroup?.alias === g.alias"
+                        (click)="selectGroup(g)">
+                        <div class="group-info">
+                            <h3>{{ g.title }}</h3>
+                            <p>{{ g.description }}</p>
+                        </div>
+                        <div class="permission-count">{{ g.permissions_count }}</div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="permissions-panel">
+                <header class="panel-header">
+                    <div class="panel-title-box">
+                        <span class="badge">ALIAS: {{ selectedGroup?.alias }}</span>
+                        <h2>Permisos para {{ selectedGroup?.title }}</h2>
+                    </div>
+                    <button class="btn-primary-sm">
+                        <ion-icon name="settings-outline"></ion-icon>
+                        Gestionar Grupo
+                    </button>
+                </header>
+
+                <div class="permissions-grid">
+                    <div class="module-section" *ngFor="let module of ['usuarios', 'pas', 'seguridad']">
+                        <div class="module-title">{{ module | uppercase }}</div>
+                        <div class="permission-row" *ngFor="let p of permisos">
+                            <ng-container *ngIf="p.module === module">
+                                <div class="p-info">
+                                    <span class="p-key">{{ p.key }}</span>
+                                    <p class="p-desc">{{ p.description }}</p>
+                                </div>
+                                <div class="p-toggle">
+                                    <ion-icon name="checkmark-circle" class="status-active"></ion-icon>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</ion-content>

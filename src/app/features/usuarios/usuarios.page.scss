@@ -1,0 +1,486 @@
+/* COLORES BASE ARGBROKER */
+:host {
+  --primary: #2B67FF;
+  --dark: #061121;
+  --text-muted: #64748B;
+  --bg-input: #F8FAFC;
+  --border-color: #E2E8F0;
+}
+
+.bg-fondo {
+  --background: #F8FAFC !important;
+}
+
+.page-container {
+  padding: 48px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   BARRA DE HERRAMIENTAS (INTEGRADA)
+   ========================================= */
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 32px 0;
+  width: 100%;
+}
+
+.search-box {
+  flex: 2;
+  /* Más ancho para búsqueda */
+  background: #ffffff !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 14px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  transition: all 0.2s ease;
+
+  ion-icon {
+    color: #94A3B8;
+    font-size: 1.3rem;
+    margin-right: 12px;
+  }
+
+  .input-limpio {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    width: 100%;
+    color: var(--dark) !important;
+    font-size: 1rem;
+    font-weight: 500;
+
+    &::placeholder {
+      color: #94A3B8;
+      font-weight: 400;
+    }
+  }
+
+  &:focus-within {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(43, 103, 255, 0.05);
+  }
+}
+
+.filter-box {
+  flex: 1;
+  /* Más angosto para el filtro */
+  background: #ffffff !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 14px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: relative;
+  transition: all 0.2s ease;
+
+  ion-icon {
+    color: #94A3B8;
+    margin-right: 10px;
+    font-size: 1.1rem;
+  }
+
+  .custom-select {
+    width: 100%;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    font-size: 0.95rem;
+    color: var(--dark);
+    font-weight: 600;
+    cursor: pointer;
+    appearance: none;
+    padding-right: 24px;
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: 16px;
+    color: #94A3B8;
+    pointer-events: none;
+    font-size: 1rem;
+  }
+
+  &:focus-within {
+    border-color: var(--primary) !important;
+  }
+}
+
+.btn-marca-desk {
+  height: 52px;
+  /* Misma altura que los inputs */
+  background: var(--dark) !important;
+  color: white !important;
+  border: none;
+  padding: 0 24px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  ion-icon {
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    background: var(--primary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(43, 103, 255, 0.15);
+  }
+}
+
+/* =========================================
+   LISTA DE USUARIOS
+   ========================================= */
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.user-item {
+  background: white;
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateX(4px);
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+}
+
+.user-info-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.avatar-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  /* Estilo Apple */
+  background: var(--dark);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-full-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin: 0;
+}
+
+.user-contact-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.info-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+
+  ion-icon {
+    font-size: 1.1rem;
+    color: #94A3B8;
+  }
+}
+
+.user-meta {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.role-tag {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(43, 103, 255, 0.08);
+  color: var(--primary);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #94A3B8;
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #CBD5E1;
+
+    &.active {
+      background: #10B981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+    }
+  }
+
+  &.active {
+    color: #10B981;
+  }
+}
+
+.user-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94A3B8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: var(--dark);
+    background: #F1F5F9;
+  }
+
+  &.delete:hover {
+    color: #EF4444;
+    background: #FEF2F2;
+  }
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px;
+  color: var(--text-muted);
+
+  ion-icon {
+    font-size: 3rem;
+    color: #CBD5E1;
+    margin-bottom: 16px;
+  }
+}
+
+/* =========================================================
+   MODAL IONIC BLINDADO
+   ========================================================= */
+ion-modal.modal-seguro {
+  --width: 550px;
+  --height: 90vh;
+  --border-radius: 24px;
+  --background: #ffffff !important;
+}
+
+.m-header {
+  padding: 24px 32px 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #F1F5F9;
+
+  h2 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--dark) !important;
+  }
+
+  .btn-close {
+    background: #F1F5F9;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: #E2E8F0;
+      color: var(--dark);
+    }
+  }
+}
+
+.m-form {
+  padding-top: 8px;
+}
+
+.form-row-custom {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.m-grupo {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-muted) !important;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-input) !important;
+    color: #000000 !important;
+    font-size: 1rem;
+    outline: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: #94A3B8;
+    }
+
+    &:focus {
+      border-color: var(--primary);
+      background: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(43, 103, 255, 0.1);
+    }
+  }
+}
+
+.btn-salvavidas-marca {
+  display: block !important;
+  width: 100%;
+  background: var(--dark) !important;
+  color: #ffffff !important;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.btn-salvavidas-gris {
+  display: block !important;
+  width: 100%;
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  padding: 12px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================================
+   RESPONSIVO
+   ========================================= */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 24px 16px 100px 16px;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .toolbar-actions {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .search-box {
+    flex: 1;
+  }
+
+  .filter-box {
+    width: auto;
+
+    .custom-select {
+      font-size: 0.85rem;
+    }
+  }
+
+  .user-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .user-meta {
+    width: 100%;
+    justify-content: space-between;
+    border-top: 1px solid #F1F5F9;
+    padding-top: 16px;
+  }
+
+  ion-modal.modal-seguro {
+    --width: 100%;
+    --height: 100% !important;
+    --border-radius: 0;
+  }
+}
+
+.fab-marca {
+  --background: var(--primary);
+}

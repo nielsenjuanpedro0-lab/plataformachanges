@@ -1,0 +1,22 @@
+<ion-split-pane contentId="org-content" when="lg">
+    <ion-menu contentId="org-content">
+        <div class="sidebar-wrapper">
+            <header class="sidebar-header">
+                <div class="brand-logo">AR</div>
+                <div class="brand-info">
+                    <h2>ARGbroker</h2>
+                    <p>Panel Organizador</p>
+                </div>
+            </header>
+
+            <nav class="nav-group">
+                <span class="nav-label">MI RED</span>
+                <a routerLink="/organizador/dashboard" routerLinkActive="is-active" class="nav-link">
+                    <ion-icon name="pie-chart-outline"></ion-icon>
+                    <span>Estadísticas Equipo</span>
+                </a>
+            </nav>
+        </div>
+    </ion-menu>
+    <ion-router-outlet id="org-content"></ion-router-outlet>
+</ion-split-pane>

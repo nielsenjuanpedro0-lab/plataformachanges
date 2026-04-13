@@ -1,0 +1,42 @@
+ion-toolbar {
+  --background: #ffffff;
+  --color: #0B345A;
+  ion-title { font-weight: 700; }
+}
+
+ion-content {
+  --background: #f8fafc;
+}
+
+.form-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+
+  h3 {
+    margin: 0 0 16px 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+ion-item {
+  --background: #f1f5f9;
+  --border-radius: 12px;
+  margin-bottom: 12px;
+  --padding-start: 16px;
+  font-size: 0.95rem;
+}
+
+.main-submit-btn {
+  --background: #0B345A;
+  --border-radius: 12px;
+  margin-top: 32px;
+  height: 52px;
+  font-weight: 600;
+}

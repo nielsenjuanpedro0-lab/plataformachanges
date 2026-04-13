@@ -1,0 +1,266 @@
+/* ESTILOS DE PÁGINA */
+.bg-fondo {
+    --background: #F8FAFC !important;
+}
+
+.page-container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    background: #ffffff !important;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+
+    ion-icon {
+        color: #94A3B8;
+        margin-right: 12px;
+    }
+
+    input {
+        border: none !important;
+        outline: none !important;
+        background: transparent;
+        width: 100%;
+        color: #061121 !important;
+        font-size: 1rem;
+    }
+}
+
+.btn-marca-desk {
+    background: #061121 !important;
+    color: #ffffff !important;
+    border-radius: 12px;
+    padding: 0 24px;
+    height: 50px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* CARDS */
+.sucursales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+}
+
+.area-card {
+    background: #ffffff !important;
+    padding: 20px 24px;
+    border-radius: 16px;
+    border: 1px solid #E2E8F0;
+
+    .icon-box-pas {
+        width: 48px;
+        height: 48px;
+        background: rgba(43, 103, 255, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2B67FF;
+        font-size: 1.4rem;
+    }
+}
+
+/* =========================================================
+   ESTA ES LA PARTE QUE ARREGLA TODO (NG-DEEP)
+   ========================================================= */
+::ng-deep {
+    .modal-pas-fuerza {
+        --width: 580px;
+        --height: auto;
+        --max-height: 90vh;
+        --border-radius: 28px;
+        --background: #ffffff !important;
+        --box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+        .modal-main-container {
+            background: #ffffff !important;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+
+        .modal-header-premium {
+            padding: 30px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h2 {
+                margin: 0;
+                color: #061121 !important;
+                font-weight: 900;
+                font-size: 1.6rem;
+                letter-spacing: -0.5px;
+            }
+
+            .close-x {
+                background: #F3F4F6;
+                border: none;
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                color: #64748B;
+                cursor: pointer;
+            }
+        }
+
+        .modal-content-scroll {
+            padding: 0 32px 20px 32px;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .form-pas-apple {
+            .group-full {
+                margin-bottom: 24px;
+            }
+
+            .row-flex {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+
+            .group-half {
+                flex: 1;
+            }
+
+            label {
+                display: block !important;
+                color: #64748B !important;
+                font-weight: 800 !important;
+                font-size: 0.75rem !important;
+                margin-bottom: 10px !important;
+                text-transform: uppercase;
+            }
+
+            input {
+                width: 100% !important;
+                background: #F9FAFB !important;
+                border: 1.5px solid #E2E8F0 !important;
+                border-radius: 14px !important;
+                padding: 16px !important;
+                color: #000000 !important;
+                /* TEXTO NEGRO SÍ O SÍ */
+                font-size: 1rem !important;
+                font-weight: 600 !important;
+                outline: none;
+
+                &::placeholder {
+                    color: #CBD5E1 !important;
+                }
+
+                &:focus {
+                    border-color: #2B67FF !important;
+                    background: #ffffff !important;
+                }
+            }
+        }
+
+        .select-apple {
+            position: relative;
+
+            select {
+                width: 100%;
+                background: #F9FAFB;
+                border: 1.5px solid #E2E8F0;
+                border-radius: 14px;
+                padding: 16px;
+                color: #000;
+                font-weight: 600;
+                appearance: none;
+            }
+
+            ion-icon {
+                position: absolute;
+                right: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #64748B;
+                pointer-events: none;
+            }
+        }
+
+        .modal-footer-premium {
+            padding: 20px 32px 32px 32px;
+            border-top: 1px solid #F1F5F9;
+
+            .btn-save-pas {
+                width: 100%;
+                background: #061121 !important;
+                color: #ffffff !important;
+                padding: 18px;
+                border-radius: 16px;
+                border: none;
+                font-weight: 700;
+                font-size: 1.1rem;
+                cursor: pointer;
+                margin-bottom: 10px;
+
+                &:disabled {
+                    opacity: 0.4;
+                }
+            }
+
+            .btn-cancel-pas {
+                width: 100%;
+                background: transparent;
+                color: #64748B !important;
+                font-weight: 700;
+                border: none;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+/* SCROLLBAR */
+.custom-scroll::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #E2E8F0;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 20px 16px;
+    }
+
+    ::ng-deep .modal-pas-fuerza {
+        --width: 100%;
+        --height: 100%;
+        --border-radius: 0;
+
+        .row-flex {
+            flex-direction: column;
+            gap: 24px;
+        }
+    }
+}

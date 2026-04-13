@@ -1,0 +1,165 @@
+<ion-content class="bg-fondo">
+  <div class="page-container">
+    <app-header title="Usuarios" subtitle="Administración de personal y niveles de acceso"></app-header>
+
+    <div class="toolbar-actions">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar nombre, DNI, N° Productor..."
+          class="input-limpio">
+      </div>
+
+      <div class="filter-box">
+        <ion-icon name="filter-outline" class="icon-filter"></ion-icon>
+        <select [(ngModel)]="filterRole" class="custom-select">
+          <option value="todos">Todos los roles</option>
+          <option value="Super Admin">Super Admin</option>
+          <option value="Comercial">Comercial</option>
+          <option value="Developer">Developer</option>
+        </select>
+        <ion-icon name="chevron-down-outline" class="select-arrow"></ion-icon>
+      </div>
+
+      <button class="btn-marca-desk desktop-only" (click)="nuevoUsuario()">
+        <ion-icon name="add-outline"></ion-icon>
+        <span>Nuevo Usuario</span>
+      </button>
+    </div>
+
+    <section class="content-section">
+      <div class="loading-state" *ngIf="isLoading">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+
+      <div class="list-container" *ngIf="!isLoading">
+
+        <div class="user-item" *ngFor="let user of filteredUsers">
+          <div class="user-info-main">
+            <div class="avatar-circle">{{ user.nombre[0] }}</div>
+            <div class="user-text">
+              <h3 class="user-full-name">{{ user.nombre }}</h3>
+              <div class="user-contact-info">
+                <span class="info-badge"><ion-icon name="mail-outline"></ion-icon> {{ user.email }}</span>
+                <span class="info-badge"><ion-icon name="person-outline"></ion-icon> DNI: {{ user.dni }}</span>
+                <span class="info-badge" *ngIf="user.numeroProductor">
+                  <ion-icon name="business-outline"></ion-icon> Prod: {{ user.numeroProductor }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-meta">
+            <span class="role-tag">{{ user.rol }}</span>
+            <div class="status-indicator" [class.active]="user.activo">
+              <div class="status-dot" [class.active]="user.activo"></div>
+              {{ user.activo ? 'Activo' : 'Inactivo' }}
+            </div>
+            <div class="user-actions">
+              <button class="icon-btn" (click)="editarUsuario(user)"><ion-icon
+                  name="create-outline"></ion-icon></button>
+              <button class="icon-btn delete" (click)="abrirEliminar(user)"><ion-icon
+                  name="trash-outline"></ion-icon></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="no-results" *ngIf="filteredUsers.length === 0">
+          <ion-icon name="search-outline"></ion-icon>
+          <p>No se encontraron usuarios con esos filtros.</p>
+        </div>
+
+      </div>
+    </section>
+  </div> <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="mobile-only">
+    <ion-fab-button (click)="nuevoUsuario()" class="fab-marca">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()" class="modal-seguro">
+    <ng-template>
+      <ion-header class="ion-no-border" style="background: #ffffff;">
+        <div class="m-header">
+          <h2>{{ editingId ? 'Editar' : 'Nuevo' }} Usuario</h2>
+          <button class="btn-close" (click)="cerrarModal()"><ion-icon name="close-outline"></ion-icon></button>
+        </div>
+      </ion-header>
+
+      <ion-content class="ion-padding" style="--background: #ffffff;">
+        <form [formGroup]="userForm" id="formUserAdmin" class="m-form">
+          <div class="m-grupo">
+            <label>NOMBRE COMPLETO</label>
+            <input type="text" formControlName="nombre" placeholder="Ej. Juan Pérez">
+          </div>
+
+          <div class="form-row-custom">
+            <div class="m-grupo flex-1">
+              <label>DNI</label>
+              <input type="text" formControlName="dni" placeholder="Sin puntos" class="monospace">
+            </div>
+            <div class="m-grupo flex-1">
+              <label>Nº PRODUCTOR</label>
+              <input type="text" formControlName="numeroProductor" placeholder="Opcional" class="monospace">
+            </div>
+          </div>
+
+          <div class="m-grupo">
+            <label>CORREO ELECTRÓNICO</label>
+            <input type="email" formControlName="email" placeholder="correo@argbroker.com">
+          </div>
+
+          <div class="form-row-custom">
+            <div class="m-grupo flex-1">
+              <label>ROL DE ACCESO</label>
+              <div class="select-caja">
+                <select formControlName="rol">
+                  <option value="Super Admin">Super Admin</option>
+                  <option value="Comercial">Comercial</option>
+                  <option value="Developer">Developer</option>
+                </select>
+                <ion-icon name="chevron-down-outline" class="flecha"></ion-icon>
+              </div>
+            </div>
+            <div class="m-grupo flex-1">
+              <label>SUCURSAL BASE</label>
+              <input type="text" formControlName="sucursal" placeholder="Ej. Necochea">
+            </div>
+          </div>
+
+          <div class="m-grupo">
+            <label>ESTADO</label>
+            <div class="select-caja">
+              <select formControlName="activo">
+                <option [ngValue]="true">Activo</option>
+                <option [ngValue]="false">Inactivo</option>
+              </select>
+              <ion-icon name="chevron-down-outline" class="flecha"></ion-icon>
+            </div>
+          </div>
+        </form>
+      </ion-content>
+
+      <ion-footer class="ion-no-border" style="background: #ffffff; padding: 16px 24px;">
+        <button class="btn-salvavidas-marca" type="submit" form="formUserAdmin" (click)="guardarUsuario()"
+          [disabled]="userForm.invalid">
+          {{ editingId ? 'Guardar Cambios' : 'Confirmar Usuario' }}
+        </button>
+        <button class="btn-salvavidas-gris" (click)="cerrarModal()">Cancelar</button>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="isDeleteModalOpen" (didDismiss)="cerrarEliminar()" class="modal-eliminar">
+    <ng-template>
+      <div class="text-center" style="padding: 32px; background: white;">
+        <ion-icon name="warning-outline" class="icono-peligro"></ion-icon>
+        <h2 class="titulo-peligro">¿Eliminar Usuario?</h2>
+        <p class="texto-peligro">Estás por borrar a <strong>{{ userToDelete?.nombre }}</strong>.</p>
+        <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn-salvavidas-rojo" (click)="confirmarEliminacion()">Sí, Eliminar</button>
+          <button class="btn-salvavidas-gris" (click)="cerrarEliminar()">Cancelar</button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

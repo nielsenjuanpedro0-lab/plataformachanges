@@ -1,0 +1,101 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ usuarioId ? 'Editar' : 'Nuevo' }} Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding workspace-bg">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-container">
+
+    <div class="form-grid">
+      <section class="form-section">
+        <h3>Datos Personales</h3>
+        <div class="row">
+          <ion-item fill="outline" class="col">
+            <ion-label position="stacked">Nombre</ion-label>
+            <ion-input formControlName="nombre" placeholder="Ej: Juan Pedro"></ion-input>
+          </ion-item>
+
+          <ion-item fill="outline" class="col">
+            <ion-label position="stacked">Apellido</ion-label>
+            <ion-input formControlName="apellido" placeholder="Ej: Nielsen"></ion-input>
+          </ion-item>
+        </div>
+
+        <ion-item fill="outline">
+          <ion-label position="stacked">Email Institucional</ion-label>
+          <ion-input type="email" formControlName="email" placeholder="usuario@argbroker.com"></ion-input>
+        </ion-item>
+      </section>
+
+      <section class="form-section">
+        <h3>Acceso al Sistema</h3>
+        <ion-item fill="outline">
+          <ion-label position="stacked">Nombre de Usuario</ion-label>
+          <ion-input formControlName="username" placeholder="jpnielsen"></ion-input>
+        </ion-item>
+
+        @if (!usuarioId) {
+        <ion-item fill="outline">
+          <ion-label position="stacked">Contraseña Inicial</ion-label>
+          <ion-input type="password" formControlName="password" placeholder="••••••••"></ion-input>
+        </ion-item>
+        }
+      </section>
+
+      <section class="form-section full-width">
+        <h3>Asignación y Roles</h3>
+        <div class="row-triple">
+
+          <ion-item fill="outline">
+            <ion-label position="stacked">Área</ion-label>
+            <ion-select formControlName="area_empresa_id" placeholder="Seleccionar">
+              @for (area of areas(); track area.id) {
+              <ion-select-option [value]="area.id">{{ area.nombre }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+
+          <ion-item fill="outline">
+            <ion-label position="stacked">Sucursal</ion-label>
+            <ion-select formControlName="sucursal_id" placeholder="Seleccionar">
+              @for (sucursal of sucursales(); track sucursal.id) {
+              <ion-select-option [value]="sucursal.id">{{ sucursal.nombre }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+
+          <ion-item fill="outline">
+            <ion-label position="stacked">Rol / Grupo</ion-label>
+            <ion-select formControlName="tipo_ejecutivo_id" placeholder="Seleccionar">
+              @for (grupo of grupos(); track grupo.value) {
+              <ion-select-option [value]="grupo.value">{{ grupo.label }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+
+        </div>
+      </section>
+    </div>
+
+    <div class="form-actions">
+      <ion-button fill="clear" color="medium" (click)="goBack()" [disabled]="isLoading()">
+        Cancelar
+      </ion-button>
+
+      <ion-button type="submit" [disabled]="userForm.invalid || isLoading()" class="btn-save">
+        @if (!isLoading()) {
+        <span>{{ usuarioId ? 'Actualizar' : 'Crear' }} Usuario</span>
+        } @else {
+        <ion-spinner name="crescent"></ion-spinner>
+        }
+      </ion-button>
+    </div>
+
+  </form>
+</ion-content>

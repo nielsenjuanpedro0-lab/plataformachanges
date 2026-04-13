@@ -1,0 +1,3020 @@
+{
+  "info": {
+    "_postman_id": "c0673c26-bf43-416c-a9ff-5ba3df062b01",
+    "name": "ARGbroker Plataforma API",
+    "description": "Colección completa de la API REST del sistema ARGbroker Plataforma.\n\nBase URL: http://localhost:8080/api/v1\n\nAutenticación: Bearer Token (CodeIgniter Shield Access Tokens)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18389209",
+    "_collection_link": "https://go.postman.co/collection/18389209-c0673c26-bf43-416c-a9ff-5ba3df062b01?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "AUTH",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonData = pm.response.json();",
+                  "pm.environment.set(\"token\", jsonData.data.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"administrador\",\n  \"password\": \"Admin2026!Broker\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Autentica un usuario por email o username + password.\nGenera un Access Token para uso en la API.\nEl token se guarda automáticamente en la variable de entorno {{token}}."
+          },
+          "response": [
+            {
+              "name": "Login exitoso",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"admin@broker.com\",\n  \"password\": \"12345678\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Login exitoso.\",\n  \"data\": {\n    \"token\": \"abc123def456...\",\n    \"user\": {\n      \"id\": 1,\n      \"username\": \"admin\",\n      \"email\": \"admin@broker.com\",\n      \"active\": true,\n      \"last_active\": \"2026-03-26 20:00:00\",\n      \"groups\": [\"broker_admin\"],\n      \"permissions\": [\n        \"usuarios.listar\",\n        \"usuarios.ver\",\n        \"usuarios.crear\",\n        \"usuarios.editar\",\n        \"usuarios.eliminar\",\n        \"organizadores.listar\",\n        \"organizadores.ver\",\n        \"organizadores.crear\",\n        \"organizadores.editar\",\n        \"organizadores.eliminar\",\n        \"pas.listar\",\n        \"pas.ver\",\n        \"pas.crear\",\n        \"pas.editar\",\n        \"pas.eliminar\",\n        \"tickets.listar\",\n        \"tickets.ver\",\n        \"tickets.crear\",\n        \"tickets.responder\",\n        \"tickets.gestionar\",\n        \"coverit.eventos.listar\",\n        \"coverit.eventos.ver\",\n        \"coverit.eventos.reprocesar\",\n        \"metricas.ver\",\n        \"metricas.exportar\"\n      ],\n      \"perfil\": {\n        \"id\": 1,\n        \"tipo_perfil\": \"administrador\",\n        \"nombre\": \"Admin\",\n        \"apellido\": \"Broker\",\n        \"tipo_documento_id\": 1,\n        \"documento_numero\": \"30000000\",\n        \"telefono\": \"3442000000\",\n        \"avatar_url\": null,\n        \"pas_id\": null,\n        \"organizador_id\": null,\n        \"estado_id\": 1,\n        \"puede_administrar_usuarios_pas\": false\n      }\n    }\n  }\n}"
+            },
+            {
+              "name": "Credenciales inválidas",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"admin@broker.com\",\n  \"password\": \"wrongpassword\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Credenciales inválidas.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Me (usuario autenticado)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Retorna los datos del usuario autenticado, incluyendo perfil, grupos y permisos."
+          },
+          "response": [
+            {
+              "name": "Datos del usuario",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "me"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"username\": \"admin\",\n      \"email\": \"admin@broker.com\",\n      \"active\": true,\n      \"last_active\": \"2026-03-26 20:00:00\",\n      \"groups\": [\"broker_admin\"],\n      \"permissions\": [\"usuarios.listar\", \"usuarios.ver\", \"organizadores.listar\", \"...\"],\n      \"perfil\": {\n        \"id\": 1,\n        \"tipo_perfil\": \"administrador\",\n        \"nombre\": \"Admin\",\n        \"apellido\": \"Broker\",\n        \"pas_id\": null,\n        \"organizador_id\": null,\n        \"estado_id\": 1,\n        \"puede_administrar_usuarios_pas\": false\n      }\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Context (inicialización frontend)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/context",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "context"
+              ]
+            },
+            "description": "Devuelve el contexto completo para inicializar el frontend: usuario, grupo, permisos efectivos, perfil, business_context y ui_context."
+          },
+          "response": [
+            {
+              "name": "Context usuario broker (superadmin)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/context",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "context"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"username\": \"administrador\",\n      \"email\": \"admin@broker.com\",\n      \"active\": true,\n      \"groups\": [\"superadmin\"]\n    },\n    \"group\": \"superadmin\",\n    \"permissions\": [\"usuarios.listar\", \"usuarios.ver\", \"...\"],\n    \"perfil\": {\n      \"id\": 1,\n      \"tipo_perfil\": \"administrador\",\n      \"nombre\": \"Admin\",\n      \"apellido\": \"Principal\",\n      \"telefono\": \"3442000000\",\n      \"pas_id\": null,\n      \"organizador_id\": null,\n      \"estado_id\": 1,\n      \"puede_administrar_usuarios_pas\": false\n    },\n    \"business_context\": {\n      \"scope_type\": \"broker\",\n      \"broker_access\": true,\n      \"organizador\": null,\n      \"pas\": null\n    },\n    \"ui_context\": {\n      \"puede_ver_usuarios\": true,\n      \"puede_ver_organizadores\": true,\n      \"puede_ver_pas\": true,\n      \"puede_administrar_usuarios_pas\": false,\n      \"scope_type\": \"broker\"\n    }\n  }\n}"
+            },
+            {
+              "name": "Context usuario PAS",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/context",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "context"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"user\": {\n      \"id\": 2,\n      \"username\": \"pas_principal_test\",\n      \"email\": \"pas.principal@test.com\",\n      \"active\": true,\n      \"groups\": [\"pas\"]\n    },\n    \"group\": \"pas\",\n    \"permissions\": [\"pas.ver\", \"tickets.listar\", \"...\"],\n    \"perfil\": {\n      \"id\": 1,\n      \"tipo_perfil\": \"pas\",\n      \"nombre\": \"Juan\",\n      \"apellido\": \"Perez\",\n      \"telefono\": \"011-4444-3333\",\n      \"pas_id\": 7,\n      \"organizador_id\": null,\n      \"estado_id\": 1,\n      \"puede_administrar_usuarios_pas\": true\n    },\n    \"business_context\": {\n      \"scope_type\": \"pas\",\n      \"broker_access\": false,\n      \"organizador\": null,\n      \"pas\": {\n        \"id\": 7,\n        \"nombre_o_razon_social\": \"PAS Test Con Usuario\"\n      }\n    },\n    \"ui_context\": {\n      \"puede_ver_usuarios\": true,\n      \"puede_ver_organizadores\": false,\n      \"puede_ver_pas\": false,\n      \"puede_administrar_usuarios_pas\": true,\n      \"scope_type\": \"pas\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Revoca el access token actual del usuario."
+          },
+          "response": [
+            {
+              "name": "Logout exitoso",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/logout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Sesión cerrada exitosamente.\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints de autenticación: login, logout y datos del usuario autenticado."
+    },
+    {
+      "name": "USUARIOS",
+      "item": [
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?page=1&per_page=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Resultados por página"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Buscar por nombre, apellido, email o username",
+                  "disabled": true
+                },
+                {
+                  "key": "grupo",
+                  "value": "",
+                  "description": "Filtrar por grupo: superadmin, broker_admin, gerencia, ejecutivo, organizador, pas",
+                  "disabled": true
+                },
+                {
+                  "key": "estado_id",
+                  "value": "",
+                  "description": "Filtrar por estado: 1=activo, 2=inactivo, 3=suspendido",
+                  "disabled": true
+                },
+                {
+                  "key": "pas_id",
+                  "value": "",
+                  "description": "Filtrar por PAS. Usar 'null' para internos sin PAS",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista usuarios con paginación y filtros opcionales.\nEl scope se aplica automáticamente según la jerarquía del usuario autenticado."
+          },
+          "response": [
+            {
+              "name": "Lista de usuarios",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users?page=1&per_page=20",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"users\": [\n      {\n        \"id\": 1,\n        \"username\": \"admin\",\n        \"email\": \"admin@broker.com\",\n        \"active\": true,\n        \"perfil\": {\n          \"id\": 1,\n          \"tipo_perfil\": \"administrador\",\n          \"nombre\": \"Admin\",\n          \"apellido\": \"Broker\",\n          \"pas_id\": null,\n          \"organizador_id\": null,\n          \"estado_id\": 1,\n          \"puede_administrar_usuarios_pas\": false\n        }\n      }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"per_page\": 20\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ver usuario",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            },
+            "description": "Obtiene el detalle completo de un usuario por ID."
+          },
+          "response": [
+            {
+              "name": "Detalle de usuario",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"username\": \"admin\",\n      \"email\": \"admin@broker.com\",\n      \"active\": true,\n      \"last_active\": \"2026-03-26 20:00:00\",\n      \"created_at\": \"2026-03-25 10:00:00\",\n      \"grupos\": [\"broker_admin\"],\n      \"perfil\": {\n        \"id\": 1,\n        \"tipo_perfil\": \"administrador\",\n        \"nombre\": \"Admin\",\n        \"apellido\": \"Broker\",\n        \"tipo_documento_id\": 1,\n        \"documento_numero\": \"30000000\",\n        \"telefono\": \"3442000000\",\n        \"direccion\": \"Calle Principal 100\",\n        \"localidad\": \"Colón\",\n        \"provincia\": \"Entre Ríos\",\n        \"codigo_postal\": \"3280\",\n        \"fecha_nacimiento\": \"1980-01-15\",\n        \"avatar_url\": null,\n        \"pas_id\": null,\n        \"organizador_id\": null,\n        \"estado_id\": 1,\n        \"puede_administrar_usuarios_pas\": false\n      }\n    }\n  }\n}"
+            },
+            {
+              "name": "Usuario no encontrado",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/9999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "9999"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Usuario no encontrado.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"usuario@broker.com\",\n  \"username\": \"usuario_demo\",\n  \"password\": \"12345678\",\n  \"grupo\": \"pas\",\n  \"tipo_perfil\": \"pas\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"tipo_documento_id\": 1,\n  \"documento_numero\": \"30123456\",\n  \"telefono\": \"3442123456\",\n  \"direccion\": \"Calle falsa 123\",\n  \"localidad\": \"Colón\",\n  \"provincia\": \"Entre Ríos\",\n  \"codigo_postal\": \"3280\",\n  \"fecha_nacimiento\": \"1985-05-10\",\n  \"pas_id\": 1,\n  \"puede_administrar_usuarios_pas\": 0,\n  \"estado_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Crea un nuevo usuario en la plataforma.\n\nReglas de jerarquía:\n- grupo=pas → requiere pas_id, NO enviar organizador_id\n- grupo=organizador → requiere organizador_id, NO enviar pas_id\n- grupo=superadmin|broker_admin|gerencia|ejecutivo → NO enviar pas_id ni organizador_id\n\nValidaciones:\n- email y username deben ser únicos\n- password mínimo 8 caracteres\n- Se valida la jerarquía según el grupo del usuario autenticado"
+          },
+          "response": [
+            {
+              "name": "Usuario creado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"usuario@broker.com\",\n  \"username\": \"usuario_demo\",\n  \"password\": \"12345678\",\n  \"grupo\": \"ejecutivo\",\n  \"tipo_perfil\": \"ejecutivo\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Usuario creado exitosamente.\",\n  \"data\": {\n    \"user\": {\n      \"id\": 2,\n      \"username\": \"usuario_demo\",\n      \"email\": \"usuario@broker.com\",\n      \"active\": true,\n      \"perfil\": {\n        \"id\": 2,\n        \"tipo_perfil\": \"ejecutivo\",\n        \"nombre\": \"Juan\",\n        \"apellido\": \"Perez\",\n        \"pas_id\": null,\n        \"organizador_id\": null,\n        \"estado_id\": 1\n      }\n    }\n  }\n}"
+            },
+            {
+              "name": "Error de validación",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"invalido\",\n  \"username\": \"ab\",\n  \"password\": \"123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error de validación.\",\n  \"errors\": {\n    \"email\": \"The email field must contain a valid email address.\",\n    \"username\": \"The username field must be at least 3 characters in length.\",\n    \"password\": \"The password field must be at least 8 characters in length.\",\n    \"grupo\": \"The grupo field is required.\",\n    \"nombre\": \"The nombre field is required.\",\n    \"apellido\": \"The apellido field is required.\"\n  }\n}"
+            },
+            {
+              "name": "Error de jerarquía",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"pas@broker.com\",\n  \"username\": \"pas_user\",\n  \"password\": \"12345678\",\n  \"grupo\": \"pas\",\n  \"tipo_perfil\": \"pas\",\n  \"nombre\": \"Test\",\n  \"apellido\": \"PAS\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error de validación de jerarquía.\",\n  \"errors\": {\n    \"pas_id\": \"pas_id es obligatorio para usuarios de grupo PAS.\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan Carlos\",\n  \"apellido\": \"Perez González\",\n  \"telefono\": \"3442999999\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            },
+            "description": "Actualiza un usuario existente. Solo se envían los campos a modificar.\nEl scope jerárquico se valida automáticamente."
+          },
+          "response": [
+            {
+              "name": "Usuario actualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Juan Carlos\",\n  \"telefono\": \"3442999999\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Usuario actualizado exitosamente.\",\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"username\": \"admin\",\n      \"email\": \"admin@broker.com\",\n      \"active\": true,\n      \"perfil\": {\n        \"nombre\": \"Juan Carlos\",\n        \"telefono\": \"3442999999\"\n      }\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "2"
+              ]
+            },
+            "description": "Soft-delete de un usuario. No se puede eliminar el propio usuario.\nSolo superadmin, broker_admin y gerencia pueden eliminar."
+          },
+          "response": [
+            {
+              "name": "Usuario eliminado",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Usuario eliminado exitosamente.\"\n}"
+            },
+            {
+              "name": "No puede eliminar su propio usuario",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"No puede eliminar su propio usuario.\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "CRUD de usuarios de la plataforma.\nLa jerarquía de acceso se aplica automáticamente según el grupo del usuario autenticado."
+    },
+    {
+      "name": "ORGANIZADORES",
+      "item": [
+        {
+          "name": "Listar organizadores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/organizadores?page=1&per_page=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "organizadores"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Resultados por página"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Buscar por nombre o código",
+                  "disabled": true
+                },
+                {
+                  "key": "estado_id",
+                  "value": "",
+                  "description": "Filtrar por estado: 1=activo, 2=inactivo, 3=suspendido",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista organizadores con paginación y filtros.\nOrganizadores solo ven su propio registro."
+          },
+          "response": [
+            {
+              "name": "Lista de organizadores",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/organizadores?page=1&per_page=20",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"organizadores\": [\n      {\n        \"id\": 1,\n        \"nombre\": \"Organizador Litoral\",\n        \"codigo\": \"ORG-LITORAL\",\n        \"telefono\": \"3442555555\",\n        \"email\": \"organizador@litoral.com\",\n        \"responsable_user_id\": 1,\n        \"estado_id\": 1,\n        \"created_at\": \"2026-03-26 10:00:00\",\n        \"updated_at\": null\n      }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"per_page\": 20\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ver organizador",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/organizadores/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "organizadores",
+                "1"
+              ]
+            },
+            "description": "Obtiene el detalle de un organizador, incluyendo datos del responsable y cantidad de PAS asociados."
+          },
+          "response": [
+            {
+              "name": "Detalle de organizador",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/organizadores/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"organizador\": {\n      \"id\": 1,\n      \"nombre\": \"Organizador Litoral\",\n      \"codigo\": \"ORG-LITORAL\",\n      \"telefono\": \"3442555555\",\n      \"email\": \"organizador@litoral.com\",\n      \"responsable_user_id\": 1,\n      \"estado_id\": 1,\n      \"created_at\": \"2026-03-26 10:00:00\",\n      \"updated_at\": null,\n      \"responsable\": {\n        \"nombre\": \"Admin\",\n        \"apellido\": \"Broker\"\n      },\n      \"pas_count\": 3\n    }\n  }\n}"
+            },
+            {
+              "name": "Organizador no encontrado",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/organizadores/9999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores",
+                    "9999"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Organizador no encontrado.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Crear organizador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Organizador Litoral\",\n  \"codigo\": \"ORG-LITORAL\",\n  \"telefono\": \"3442555555\",\n  \"email\": \"organizador@litoral.com\",\n  \"responsable_user_id\": 1,\n  \"estado_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/organizadores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "organizadores"
+              ]
+            },
+            "description": "Crea un nuevo organizador.\n\nCampos requeridos: nombre, codigo\nCampos opcionales: telefono, email, responsable_user_id, estado_id\n\nEl código debe ser único."
+          },
+          "response": [
+            {
+              "name": "Organizador creado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Organizador Litoral\",\n  \"codigo\": \"ORG-LITORAL\",\n  \"telefono\": \"3442555555\",\n  \"email\": \"organizador@litoral.com\",\n  \"responsable_user_id\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/organizadores",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Organizador creado exitosamente.\",\n  \"data\": {\n    \"organizador\": {\n      \"id\": 1,\n      \"nombre\": \"Organizador Litoral\",\n      \"codigo\": \"ORG-LITORAL\",\n      \"telefono\": \"3442555555\",\n      \"email\": \"organizador@litoral.com\",\n      \"responsable_user_id\": 1,\n      \"estado_id\": 1,\n      \"created_at\": \"2026-03-26 10:00:00\",\n      \"updated_at\": null\n    }\n  }\n}"
+            },
+            {
+              "name": "Código duplicado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Otro Organizador\",\n  \"codigo\": \"ORG-LITORAL\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/organizadores",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error de validación.\",\n  \"errors\": {\n    \"codigo\": \"El código ya está registrado.\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar organizador",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Organizador Litoral Actualizado\",\n  \"telefono\": \"3442666666\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/organizadores/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "organizadores",
+                "1"
+              ]
+            },
+            "description": "Actualiza un organizador existente. Solo se envían los campos a modificar."
+          },
+          "response": [
+            {
+              "name": "Organizador actualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Organizador Litoral Actualizado\",\n  \"telefono\": \"3442666666\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/organizadores/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Organizador actualizado exitosamente.\",\n  \"data\": {\n    \"organizador\": {\n      \"id\": 1,\n      \"nombre\": \"Organizador Litoral Actualizado\",\n      \"codigo\": \"ORG-LITORAL\",\n      \"telefono\": \"3442666666\",\n      \"email\": \"organizador@litoral.com\",\n      \"responsable_user_id\": 1,\n      \"estado_id\": 1,\n      \"created_at\": \"2026-03-26 10:00:00\",\n      \"updated_at\": \"2026-03-26 15:00:00\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Eliminar organizador",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/organizadores/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "organizadores",
+                "1"
+              ]
+            },
+            "description": "Soft-delete de un organizador.\nNo se puede eliminar si tiene PAS asociados activos."
+          },
+          "response": [
+            {
+              "name": "Organizador eliminado",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/organizadores/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Organizador eliminado exitosamente.\"\n}"
+            },
+            {
+              "name": "Tiene PAS asociados",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/organizadores/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "organizadores",
+                    "1"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"No se puede eliminar: el organizador tiene 3 PAS asociado(s). Reasígnelos primero.\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "CRUD de organizadores (nodos comerciales del broker).\nLos organizadores no tienen jerarquía recursiva.\nPueden tener un usuario responsable y múltiples PAS asociados."
+    },
+    {
+      "name": "PAS",
+      "item": [
+        {
+          "name": "Listar PAS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pas?page=1&per_page=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pas"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Resultados por página"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Buscar por nombre, matrícula o CUIT",
+                  "disabled": true
+                },
+                {
+                  "key": "estado_id",
+                  "value": "",
+                  "description": "Filtrar por estado: 1=activo, 2=inactivo, 3=suspendido",
+                  "disabled": true
+                },
+                {
+                  "key": "organizador_id",
+                  "value": "",
+                  "description": "Filtrar por organizador",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista PAS con paginación y filtros opcionales.\nEl scope se aplica según la jerarquía: broker internos ven todos, organizador ve sus PAS, PAS ve solo su registro."
+          },
+          "response": [
+            {
+              "name": "Lista de PAS",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/pas?page=1&per_page=20",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"pas\": [\n      {\n        \"id\": 1,\n        \"nombre_o_razon_social\": \"PAS Demo\",\n        \"cuit\": \"20-12345678-9\",\n        \"matricula\": \"MAT-001\",\n        \"organizador_id\": 1,\n        \"email_contacto\": \"pas@demo.com\",\n        \"telefono_contacto\": \"011-5555-0000\",\n        \"fecha_alta\": \"2026-03-27\",\n        \"comision_porcentaje\": null,\n        \"estado_id\": 1,\n        \"created_at\": \"2026-03-27 10:00:00\"\n      }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"per_page\": 20\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ver PAS",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pas",
+                "1"
+              ]
+            },
+            "description": "Obtiene el detalle completo de un PAS por ID."
+          },
+          "response": [
+            {
+              "name": "Detalle de PAS",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/pas/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"pas\": {\n      \"id\": 1,\n      \"nombre_o_razon_social\": \"PAS Demo\",\n      \"cuit\": \"20-12345678-9\",\n      \"matricula\": \"MAT-001\",\n      \"organizador_id\": 1,\n      \"email_contacto\": \"pas@demo.com\",\n      \"telefono_contacto\": \"011-5555-0000\",\n      \"fecha_alta\": \"2026-03-27\",\n      \"fecha_baja\": null,\n      \"comision_porcentaje\": null,\n      \"estado_id\": 1,\n      \"observaciones\": null,\n      \"created_at\": \"2026-03-27 10:00:00\",\n      \"updated_at\": \"2026-03-27 10:00:00\",\n      \"deleted_at\": null\n    }\n  }\n}"
+            },
+            {
+              "name": "PAS no encontrado",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/pas/9999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "9999"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"PAS no encontrado.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Crear PAS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_o_razon_social\": \"PAS Nuevo\",\n  \"matricula\": \"MAT-NUEVO-001\",\n  \"cuit\": \"20-11223344-5\",\n  \"email_contacto\": \"nuevo@pas.com\",\n  \"telefono_contacto\": \"011-5555-1111\",\n  \"organizador_id\": 1,\n  \"estado_id\": 1,\n  \"observaciones\": \"PAS creado desde Postman\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pas"
+              ]
+            },
+            "description": "Crea un nuevo PAS (solo el registro PAS, sin usuario).\n\nCampos requeridos: nombre_o_razon_social, matricula, cuit\nCampos opcionales: email_contacto, telefono_contacto, organizador_id, fecha_alta, comision_porcentaje, estado_id, observaciones\n\nLa matrícula y CUIT deben ser únicos (incluyendo registros soft-deleted)."
+          },
+          "response": [
+            {
+              "name": "PAS creado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_o_razon_social\": \"PAS Nuevo\",\n  \"matricula\": \"MAT-NUEVO-001\",\n  \"cuit\": \"20-11223344-5\",\n  \"email_contacto\": \"nuevo@pas.com\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/pas",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"PAS creado exitosamente.\",\n  \"data\": {\n    \"pas\": {\n      \"id\": 1,\n      \"nombre_o_razon_social\": \"PAS Nuevo\",\n      \"cuit\": \"20-11223344-5\",\n      \"matricula\": \"MAT-NUEVO-001\",\n      \"organizador_id\": null,\n      \"email_contacto\": \"nuevo@pas.com\",\n      \"fecha_alta\": \"2026-03-27\",\n      \"estado_id\": 1\n    }\n  }\n}"
+            },
+            {
+              "name": "Matrícula duplicada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_o_razon_social\": \"PAS Duplicado\",\n  \"matricula\": \"MAT-NUEVO-001\",\n  \"cuit\": \"20-99999999-9\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/pas",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error de validación.\",\n  \"errors\": {\n    \"matricula\": \"La matrícula ya está registrada.\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Crear PAS con usuario principal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pas\": {\n    \"nombre_o_razon_social\": \"PAS Con Usuario\",\n    \"matricula\": \"MAT-CONUSER-001\",\n    \"cuit\": \"20-55667788-3\",\n    \"email_contacto\": \"contacto@pasconuser.com\",\n    \"telefono_contacto\": \"011-5555-2222\",\n    \"organizador_id\": null,\n    \"estado_id\": 1,\n    \"observaciones\": \"PAS creado con usuario principal\"\n  },\n  \"usuario_principal\": {\n    \"email\": \"usuario@pasconuser.com\",\n    \"username\": \"pas_con_user\",\n    \"password\": \"SecurePass123!\",\n    \"nombre\": \"Carlos\",\n    \"apellido\": \"González\",\n    \"tipo_documento_id\": 1,\n    \"documento_numero\": \"33445566\",\n    \"telefono\": \"011-4444-3333\",\n    \"direccion\": \"Av. Corrientes 1234\",\n    \"localidad\": \"CABA\",\n    \"provincia\": \"Buenos Aires\",\n    \"codigo_postal\": \"1043\",\n    \"fecha_nacimiento\": \"1985-06-15\",\n    \"puede_administrar_usuarios_pas\": 1,\n    \"estado_id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pas/with-user",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pas",
+                "with-user"
+              ]
+            },
+            "description": "Crea un PAS junto con su usuario principal en una sola transacción atómica.\nSi falla alguna parte, se hace rollback completo.\n\nEl usuario se crea con grupo 'pas' y perfil vinculado al PAS creado.\n\nCampos PAS requeridos: nombre_o_razon_social, matricula\nCampos usuario requeridos: email, username, password, nombre, apellido\n\nValidaciones:\n- Matrícula y CUIT únicos (incluyendo soft-deleted)\n- Email y username únicos\n- Organizador debe existir si se envía organizador_id"
+          },
+          "response": [
+            {
+              "name": "PAS y usuario creados",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pas\": {\n    \"nombre_o_razon_social\": \"PAS Con Usuario\",\n    \"matricula\": \"MAT-CONUSER-001\",\n    \"cuit\": \"20-55667788-3\",\n    \"email_contacto\": \"contacto@pasconuser.com\"\n  },\n  \"usuario_principal\": {\n    \"email\": \"usuario@pasconuser.com\",\n    \"username\": \"pas_con_user\",\n    \"password\": \"SecurePass123!\",\n    \"nombre\": \"Carlos\",\n    \"apellido\": \"González\",\n    \"puede_administrar_usuarios_pas\": 1\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/pas/with-user",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "with-user"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"PAS y usuario principal creados exitosamente.\",\n  \"data\": {\n    \"pas\": {\n      \"id\": 7,\n      \"nombre_o_razon_social\": \"PAS Con Usuario\",\n      \"cuit\": \"20-55667788-3\",\n      \"matricula\": \"MAT-CONUSER-001\",\n      \"organizador_id\": null,\n      \"email_contacto\": \"contacto@pasconuser.com\",\n      \"fecha_alta\": \"2026-03-27\",\n      \"estado_id\": 1\n    },\n    \"usuario_principal\": {\n      \"id\": 2,\n      \"username\": \"pas_con_user\",\n      \"email\": \"usuario@pasconuser.com\",\n      \"groups\": [\"pas\"],\n      \"perfil\": {\n        \"id\": 1,\n        \"user_id\": 2,\n        \"tipo_perfil\": \"pas\",\n        \"nombre\": \"Carlos\",\n        \"apellido\": \"González\",\n        \"pas_id\": 7,\n        \"puede_administrar_usuarios_pas\": 1,\n        \"estado_id\": 1\n      }\n    }\n  }\n}"
+            },
+            {
+              "name": "Matrícula duplicada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pas\": {\n    \"nombre_o_razon_social\": \"Duplicado\",\n    \"matricula\": \"MAT-CONUSER-001\",\n    \"cuit\": \"20-00000000-0\"\n  },\n  \"usuario_principal\": {\n    \"email\": \"otro@test.com\",\n    \"username\": \"otro_user\",\n    \"password\": \"SecurePass123!\",\n    \"nombre\": \"Test\",\n    \"apellido\": \"Dup\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/pas/with-user",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "with-user"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error de validación.\",\n  \"errors\": {\n    \"pas.matricula\": \"La matrícula ya está registrada.\"\n  }\n}"
+            },
+            {
+              "name": "Error de validación campos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pas\": {},\n  \"usuario_principal\": {}\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/pas/with-user",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "with-user"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error de validación.\",\n  \"errors\": {\n    \"pas.nombre_o_razon_social\": \"The pas.nombre_o_razon_social field is required.\",\n    \"pas.matricula\": \"The pas.matricula field is required.\",\n    \"usuario_principal.email\": \"The usuario_principal.email field is required.\",\n    \"usuario_principal.username\": \"The usuario_principal.username field is required.\",\n    \"usuario_principal.password\": \"The usuario_principal.password field is required.\",\n    \"usuario_principal.nombre\": \"The usuario_principal.nombre field is required.\",\n    \"usuario_principal.apellido\": \"The usuario_principal.apellido field is required.\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar PAS",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_o_razon_social\": \"PAS Actualizado\",\n  \"telefono_contacto\": \"011-6666-7777\",\n  \"comision_porcentaje\": 15.50\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pas",
+                "1"
+              ]
+            },
+            "description": "Actualiza un PAS existente. Solo se envían los campos a modificar.\nEl scope jerárquico se valida automáticamente."
+          },
+          "response": [
+            {
+              "name": "PAS actualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre_o_razon_social\": \"PAS Actualizado\",\n  \"telefono_contacto\": \"011-6666-7777\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/pas/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"PAS actualizado exitosamente.\",\n  \"data\": {\n    \"pas\": {\n      \"id\": 1,\n      \"nombre_o_razon_social\": \"PAS Actualizado\",\n      \"cuit\": \"20-12345678-9\",\n      \"matricula\": \"MAT-001\",\n      \"telefono_contacto\": \"011-6666-7777\",\n      \"comision_porcentaje\": 15.50,\n      \"estado_id\": 1,\n      \"updated_at\": \"2026-03-27 15:00:00\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Eliminar PAS",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "pas",
+                "1"
+              ]
+            },
+            "description": "Soft-delete de un PAS.\nEl scope jerárquico se valida automáticamente."
+          },
+          "response": [
+            {
+              "name": "PAS eliminado",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/pas/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"PAS eliminado exitosamente.\"\n}"
+            },
+            {
+              "name": "PAS no encontrado",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/pas/9999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "pas",
+                    "9999"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"PAS no encontrado.\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "CRUD de Productores Asesores de Seguros (PAS).\nIncluye endpoint transaccional para crear PAS + usuario principal en una sola operación.\nEl scope jerárquico se aplica automáticamente según el grupo del usuario autenticado."
+    },
+    {
+      "name": "SEGURIDAD",
+      "item": [
+        {
+          "name": "Listar Grupos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/security/groups",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "groups"
+              ]
+            },
+            "description": "Lista todos los grupos del sistema con sus permisos expandidos.\nRequiere permiso: usuarios.ver"
+          },
+          "response": [
+            {
+              "name": "Grupos listados",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/security/groups",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "groups"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"alias\": \"superadmin\",\n      \"title\": \"Super Administrador\",\n      \"description\": \"Acceso total al sistema\",\n      \"permissions_count\": 25,\n      \"permissions\": [\"usuarios.listar\", \"usuarios.ver\", \"...\"]\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar Permisos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/security/permissions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "permissions"
+              ]
+            },
+            "description": "Lista todos los permisos del sistema agrupados por módulo.\nRequiere permiso: usuarios.ver"
+          },
+          "response": [
+            {
+              "name": "Permisos listados",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/security/permissions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "permissions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"key\": \"usuarios.listar\",\n      \"description\": \"Listar usuarios\",\n      \"module\": \"usuarios\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Ver Autorización de Usuario",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/security/users/2/authorization",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "users",
+                "2",
+                "authorization"
+              ]
+            },
+            "description": "Obtiene la vista completa de seguridad de un usuario: grupo, permisos heredados, directos, efectivos y contexto de negocio.\nRequiere permiso: usuarios.ver"
+          },
+          "response": [
+            {
+              "name": "Autorización del usuario",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/security/users/2/authorization",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "users",
+                    "2",
+                    "authorization"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"user_id\": 2,\n    \"username\": \"pas_principal_test\",\n    \"email\": \"pas_test@test.com\",\n    \"grupo\": \"pas\",\n    \"permisos_heredados\": [\"pas.listar\", \"pas.ver\", \"...\"],\n    \"permisos_directos\": [],\n    \"permisos_efectivos\": [\"pas.listar\", \"pas.ver\", \"...\"],\n    \"total_heredados\": 12,\n    \"total_directos\": 0,\n    \"total_efectivos\": 12,\n    \"business_context\": {\n      \"pas_id\": 7,\n      \"pas_nombre\": \"PAS Test Con Usuario\",\n      \"organizador_id\": null,\n      \"organizador_nombre\": null\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Cambiar Grupo de Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group\": \"ejecutivo\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/security/users/2/group",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "users",
+                "2",
+                "group"
+              ]
+            },
+            "description": "Cambia el grupo (rol) de un usuario.\nValida jerarquía: solo superadmin puede asignar superadmin.\nNo puede cambiar su propio grupo.\nLimpia FK (pas_id, organizador_id) si el cambio de contexto lo requiere.\nRequiere permiso: usuarios.editar"
+          },
+          "response": [
+            {
+              "name": "Grupo cambiado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": \"ejecutivo\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/security/users/2/group",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "users",
+                    "2",
+                    "group"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Grupo actualizado exitosamente.\",\n  \"data\": {\n    \"user_id\": 2,\n    \"previous_group\": \"pas\",\n    \"new_group\": \"ejecutivo\",\n    \"inherited_permissions\": [\"pas.listar\", \"pas.ver\", \"...\"],\n    \"total_inherited\": 12\n  }\n}"
+            },
+            {
+              "name": "No puede cambiar propio grupo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": \"gerencia\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/security/users/1/group",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "users",
+                    "1",
+                    "group"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"No puede cambiar su propio grupo.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Otorgar Permisos Directos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": [\n    \"metricas.exportar\",\n    \"pas.crear\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/security/users/2/permissions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "users",
+                "2",
+                "permissions"
+              ]
+            },
+            "description": "Otorga permisos directos adicionales a un usuario.\nSolo superadmin y broker_admin pueden otorgar permisos directos.\nValida que los permisos existan en el sistema.\nRequiere permiso: usuarios.editar"
+          },
+          "response": [
+            {
+              "name": "Permisos otorgados",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\"metricas.exportar\", \"pas.crear\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/security/users/2/permissions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "users",
+                    "2",
+                    "permissions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Permisos otorgados exitosamente.\",\n  \"data\": {\n    \"user_id\": 2,\n    \"granted\": [\"metricas.exportar\", \"pas.crear\"],\n    \"total_direct\": 2,\n    \"total_effective\": 14\n  }\n}"
+            },
+            {
+              "name": "Permisos inválidos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\"permiso.falso\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/security/users/2/permissions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "users",
+                    "2",
+                    "permissions"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"Error de validación.\",\n  \"errors\": {\n    \"permissions\": \"Permisos no válidos: permiso.falso\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Revocar Permisos Directos",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": [\n    \"metricas.exportar\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/security/users/2/permissions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "users",
+                "2",
+                "permissions"
+              ]
+            },
+            "description": "Revoca permisos directos de un usuario.\nSolo superadmin y broker_admin pueden revocar permisos directos.\nNo afecta permisos heredados del grupo.\nRequiere permiso: usuarios.editar"
+          },
+          "response": [
+            {
+              "name": "Permisos revocados",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\"metricas.exportar\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/security/users/2/permissions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "security",
+                    "users",
+                    "2",
+                    "permissions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Permisos revocados exitosamente.\",\n  \"data\": {\n    \"user_id\": 2,\n    \"revoked\": [\"metricas.exportar\"],\n    \"total_direct\": 1,\n    \"total_effective\": 13\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Administración de seguridad: grupos, permisos y autorizaciones de usuarios."
+    },
+    {
+      "name": "MIGRATIONS",
+      "item": [
+        {
+          "name": "Status (estado de migraciones)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Migration-Key",
+                "value": "{{migration_key}}",
+                "description": "API key definida en migrations.apiKey del .env"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/migrations/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "migrations",
+                "status"
+              ]
+            },
+            "description": "Devuelve el listado de migraciones ejecutadas y pendientes, agrupadas por batch."
+          },
+          "response": [
+            {
+              "name": "Estado con migraciones ejecutadas",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "X-Migration-Key",
+                    "value": "{{migration_key}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/migrations/status",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "migrations",
+                    "status"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"total_executed\": 13,\n    \"total_pending\": 0,\n    \"last_batch\": 3,\n    \"pending\": [],\n    \"executed\": [\n      {\n        \"version\": \"2026-03-26-100050\",\n        \"class\": \"App\\\\Database\\\\Migrations\\\\CreateTiposDocumento\",\n        \"group\": \"default\",\n        \"namespace\": \"App\",\n        \"time\": \"1774566658\",\n        \"batch\": \"1\"\n      }\n    ]\n  }\n}"
+            },
+            {
+              "name": "API key inválida",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "X-Migration-Key",
+                    "value": "clave-incorrecta"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/migrations/status",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "migrations",
+                    "status"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"API key inválida.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Latest (ejecutar pendientes)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Migration-Key",
+                "value": "{{migration_key}}",
+                "description": "API key definida en migrations.apiKey del .env"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/migrations/latest",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "migrations",
+                "latest"
+              ]
+            },
+            "description": "Ejecuta todas las migraciones pendientes (equivalente a php spark migrate).\nPuede usarse sobre una base de datos completamente vacía."
+          },
+          "response": [
+            {
+              "name": "Migraciones ejecutadas",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-Migration-Key",
+                    "value": "{{migration_key}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/migrations/latest",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "migrations",
+                    "latest"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Migraciones ejecutadas correctamente.\",\n  \"data\": {\n    \"migrated\": [\n      \"2026-03-26-100050_CreateTiposDocumento\",\n      \"2026-03-26-100055_CreateEstados\",\n      \"2026-03-26-100100_CreateOrganizadores\"\n    ],\n    \"total\": 3\n  }\n}"
+            },
+            {
+              "name": "Sin migraciones pendientes",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-Migration-Key",
+                    "value": "{{migration_key}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/migrations/latest",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "migrations",
+                    "latest"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"No hay migraciones pendientes.\",\n  \"data\": {\n    \"migrated\": [],\n    \"total\": 0\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Rollback (revertir último batch)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Migration-Key",
+                "value": "{{migration_key}}",
+                "description": "API key definida en migrations.apiKey del .env"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/migrations/rollback",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "migrations",
+                "rollback"
+              ]
+            },
+            "description": "Revierte las migraciones del último batch ejecutado.\nEquivalente a php spark migrate:rollback."
+          },
+          "response": [
+            {
+              "name": "Rollback exitoso",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-Migration-Key",
+                    "value": "{{migration_key}}"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/migrations/rollback",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "migrations",
+                    "rollback"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Rollback ejecutado correctamente.\",\n  \"data\": {\n    \"batch_reverted\": 3,\n    \"rolled_back\": [\n      \"2026-03-26-100120_UpdateOrganizadoresAddColumns\"\n    ],\n    \"total\": 1\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints de administración de migraciones de base de datos.\nProtegidos por API key (header X-Migration-Key) en lugar de Bearer Token.\nNo dependen de Shield ni de tablas existentes: funcionan sobre una BD vacía.\n\nUsá la clave definida en migrations.apiKey del archivo .env del servidor."
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "migration_key",
+      "value": "",
+      "description": "API key para endpoints de migraciones (valor de migrations.apiKey en .env)"
+    }
+  ]
+}

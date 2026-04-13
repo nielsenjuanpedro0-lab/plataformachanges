@@ -1,0 +1,149 @@
+$primary-color: #0B345A;
+$surface-color: #ffffff;
+$background-color: #f3f4f6;
+$text-dark: #1f2937;
+$text-muted: #6b7280;
+
+.login-content {
+  --background: #{$background-color};
+}
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 100%;
+}
+
+
+
+.brand-section {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .logo-arg {
+    width: 240px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .subtitle {
+    color: $text-muted;
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+}
+
+.form-card {
+  background: $surface-color;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0 0 8px 0;
+    }
+
+    p {
+      color: $text-muted;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+  }
+}
+
+.custom-input {
+  --color: #{$text-dark};
+  --placeholder-color: #{$text-muted};
+  --label-color: #6b7280;
+  --label-color-focused: #0B345A;
+  --highlight-color-focused: #0B345A;
+  --border-radius: 12px;
+  --border-color: #e5e7eb;
+  --border-width: 1.5px;
+  --padding-start: 16px;
+  font-size: 0.95rem;
+  margin-top: 8px;
+
+  &.custom-input-margin {
+    margin-top: 12px;
+  }
+
+  .input-icon {
+    color: $text-muted;
+    margin-right: 8px;
+  }
+}
+
+.validation-error {
+  color: var(--ion-color-danger);
+  font-size: 0.8rem;
+  margin-top: 4px;
+  margin-left: 12px;
+}
+
+.forgot-password {
+  text-align: right;
+  margin-top: 8px;
+  margin-bottom: 20px;
+
+  a {
+    color: $primary-color;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.submit-btn {
+  --border-radius: 12px;
+  --background: #{$primary-color};
+  --background-activated: darken($primary-color, 10%);
+  --box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+  height: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  background-color: #fee2e2;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  ion-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+  }
+}

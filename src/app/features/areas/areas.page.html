@@ -1,0 +1,163 @@
+<ion-content>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="title-group">
+                <h1 class="page-title">Áreas de Empresa</h1>
+                <p class="page-subtitle">Gestión de departamentos internos</p>
+            </div>
+            <button class="btn-primary" (click)="nuevaArea()">
+                <ion-icon name="add-outline"></ion-icon>
+                Nueva Área
+            </button>
+        </header>
+
+        <section class="content-section">
+            <div class="loading-state" *ngIf="isLoading">
+                <ion-spinner name="crescent"></ion-spinner>
+                <p>Cargando áreas...</p>
+            </div>
+
+            <div class="list-container" *ngIf="!isLoading && areas.length > 0">
+                <div class="list-header desktop-only">
+                    <span class="col-info-principal">ÁREA / CÓDIGO</span>
+                    <span class="col-estado">ESTADO</span>
+                    <span class="col-acciones">ACCIONES</span>
+                </div>
+
+                <div class="list-body">
+                    <div class="data-card" *ngFor="let area of areas">
+                        <div class="card-indicator" [class.bg-green]="area.estado_id === 1"
+                            [class.bg-gray]="area.estado_id !== 1"></div>
+
+                        <div class="col-info-principal">
+                            <span class="mobile-label">ÁREA</span>
+                            <div class="info-stack">
+                                <span class="name-text">{{ area.nombre }}</span>
+                                <span class="code-text">{{ area.codigo }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-estado">
+                            <span class="mobile-label">ESTADO</span>
+                            <span class="status-pill" [class.active]="area.estado_id === 1"
+                                [class.inactive]="area.estado_id !== 1">
+                                {{ area.estado_id === 1 ? 'Activo' : 'Inactivo' }}
+                            </span>
+                        </div>
+
+                        <div class="col-acciones">
+                            <button class="action-btn edit" (click)="editarArea(area)">
+                                <ion-icon name="create-outline"></ion-icon>
+                            </button>
+                            <button class="action-btn delete" (click)="abrirEliminar(area)">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="empty-state" *ngIf="!isLoading && areas.length === 0">
+                <div class="empty-icon">
+                    <ion-icon name="business-outline"></ion-icon>
+                </div>
+                <h3>No hay áreas registradas</h3>
+                <p>Aún no has creado departamentos en el sistema.</p>
+                <button class="btn-primary" (click)="nuevaArea()">Crear mi primera área</button>
+            </div>
+        </section>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="mobile-only">
+        <ion-fab-button class="fab-primary" (click)="nuevaArea()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()" class="centered-modal form-modal">
+        <ng-template>
+            <div class="custom-modal-content" (click)="clickOutsideDropdown($event)">
+                <div class="modal-header">
+                    <h2 class="modal-title">{{ editingId ? 'Editar Área' : 'Nueva Área' }}</h2>
+                    <button class="btn-close-icon" (click)="cerrarModal()">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </button>
+                </div>
+
+                <form [formGroup]="areaForm" (ngSubmit)="guardarArea()" class="custom-form">
+                    <div class="form-group">
+                        <label class="input-label">Nombre del Área</label>
+                        <input type="text" formControlName="nombre" class="custom-input"
+                            placeholder="Ej. Ventas Corporativas" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="input-label">Código Interno</label>
+                        <input type="text" formControlName="codigo" class="custom-input monospace"
+                            placeholder="ej_ventas_corp" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label>DESCRIPCIÓN DEL ÁREA</label>
+                        <textarea FORMcONTROLnAME="descripción" placeholder="Breve detalle de las funciones del área..."
+                            rows="3" class="input-limpio"></textarea>
+                    </div>
+
+                    <div class="form-group dropdown-group">
+                        <label class="input-label">Estado</label>
+                        <div class="custom-dropdown-container">
+                            <div class="custom-dropdown-trigger" [class.open]="isDropdownOpen"
+                                (click)="toggleDropdown($event)">
+                                <span>{{ getEstadoLabel() }}</span>
+                                <ion-icon name="chevron-down-outline" class="dropdown-icon"
+                                    [class.rotate]="isDropdownOpen"></ion-icon>
+                            </div>
+
+                            <div class="custom-dropdown-menu" *ngIf="isDropdownOpen">
+                                <div class="dropdown-item" [class.selected]="areaForm.get('estado_id')?.value === 1"
+                                    (click)="selectEstado(1)">
+                                    <span>Activo</span>
+                                    <ion-icon name="checkmark"
+                                        *ngIf="areaForm.get('estado_id')?.value === 1"></ion-icon>
+                                </div>
+                                <div class="dropdown-item" [class.selected]="areaForm.get('estado_id')?.value === 0"
+                                    (click)="selectEstado(0)">
+                                    <span>Inactivo</span>
+                                    <ion-icon name="checkmark"
+                                        *ngIf="areaForm.get('estado_id')?.value === 0"></ion-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" (click)="cerrarModal()">Cancelar</button>
+                        <button type="submit" class="btn-primary full-width" [disabled]="areaForm.invalid">
+                            <ion-icon name="save-outline"></ion-icon>
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </ng-template>
+    </ion-modal>
+
+    <ion-modal [isOpen]="isDeleteModalOpen" (didDismiss)="cerrarEliminar()" class="centered-modal alert-modal">
+        <ng-template>
+            <div class="custom-modal-content">
+                <div class="alert-icon-box">
+                    <ion-icon name="warning-outline"></ion-icon>
+                </div>
+                <h2 class="alert-title">¿Eliminar Área?</h2>
+                <p class="alert-message">
+                    Estás por eliminar <strong>{{ areaToDelete?.nombre }}</strong>. Esta acción requerirá validaciones
+                    futuras y no podrá deshacerse.
+                </p>
+                <div class="modal-actions">
+                    <button class="btn-secondary" (click)="cerrarEliminar()">Cancelar</button>
+                    <button class="btn-danger full-width" (click)="confirmarEliminacion()">Eliminar</button>
+                </div>
+            </div>
+        </ng-template>
+    </ion-modal>
+</ion-content>
